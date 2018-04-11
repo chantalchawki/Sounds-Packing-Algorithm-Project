@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Win32;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,21 @@ namespace Sounds_Packing_Algorithm_Project
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        
+
+        private void Open_File_Explorer_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            
+          //  ofd.ShowDialog();
+
+            if(ofd.ShowDialog()== true)
+            {
+                Path_TextBox.Text = ofd.FileName;
+            }
+
         }
     }
 }
