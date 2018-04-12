@@ -5,11 +5,11 @@
     <Grid>
         <Button x:Name="Open_File_Explorer" Content="Open File Explorer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="141" Margin="19,129,0,0" Height="33" Click="Open_File_Explorer_Click"/>
         <TextBox x:Name="Path_TextBox" HorizontalAlignment="Left" Height="33" Margin="191,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="243"/>
-        <Button x:Name="WorstFit1" Content="Worst Fit (Linear)" HorizontalAlignment="Left" Margin="50,208,0,0" VerticalAlignment="Top" Width="165" Height="31"/>
-        <Button x:Name="WorstFitD2" Content="Worst Fit Decreasing (PQ)" HorizontalAlignment="Left" Margin="250,264,0,0" VerticalAlignment="Top" Width="165" Height="31"/>
-        <Button x:Name="WorstFitD1" Content="Worst Fit Decreasing (Linear)" HorizontalAlignment="Left" Margin="50,264,0,0" VerticalAlignment="Top" Width="165" Height="31"/>
-        <Button x:Name="FirstFit" Content="First Fit Decreasing" HorizontalAlignment="Left" Margin="250,321,0,0" VerticalAlignment="Top" Width="165" Height="31"/>
-        <Button x:Name="WorstFit2" Content="Worst Fit (PQ)" HorizontalAlignment="Left" Margin="250,208,0,0" VerticalAlignment="Top" Width="165" Height="31"/>
+        <Button x:Name="WorstFit1" Content="Worst Fit (Linear)" HorizontalAlignment="Left" Margin="50,208,0,0" VerticalAlignment="Top" Width="165" Height="31" Click="WorstFit1_Click"/>
+        <Button x:Name="WorstFitD2" Content="Worst Fit Decreasing (PQ)" HorizontalAlignment="Left" Margin="250,264,0,0" VerticalAlignment="Top" Width="165" Height="31" Click="WorstFitD2_Click"/>
+        <Button x:Name="WorstFitD1" Content="Worst Fit Decreasing (Linear)" HorizontalAlignment="Left" Margin="50,264,0,0" VerticalAlignment="Top" Width="165" Height="31" Click="WorstFitD1_Click"/>
+        <Button x:Name="FirstFit" Content="First Fit Decreasing" HorizontalAlignment="Left" Margin="250,321,0,0" VerticalAlignment="Top" Width="165" Height="31" Click="FirstFit_Click"/>
+        <Button x:Name="WorstFit2" Content="Worst Fit (PQ)" HorizontalAlignment="Left" Margin="250,208,0,0" VerticalAlignment="Top" Width="165" Height="31" Click="WorstFit2_Click"/>
         <Button x:Name="BestFit" Content="Best Fit" HorizontalAlignment="Left" Margin="146,380,0,0" VerticalAlignment="Top" Width="165" Height="31"/>
         <Button x:Name="FolderFilling" Content="Folder Filling" HorizontalAlignment="Left" Margin="50,321,0,0" VerticalAlignment="Top" Width="165" Height="31"/>
         <TextBox x:Name="NumberOfSec" HorizontalAlignment="Left" Height="33" Margin="191,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="243"/>
