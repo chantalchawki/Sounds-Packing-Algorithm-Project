@@ -163,7 +163,7 @@ namespace Sounds_Packing_Algorithm_Project
                 readfile();
                 ALGORITHM.Worst_Fit_Linear();
                 MessageBox.Show("Audio files moved.");
-                NumberOfSec.Text = "";
+              //  NumberOfSec.Text = "";
 
             }
             else
@@ -178,7 +178,7 @@ namespace Sounds_Packing_Algorithm_Project
                 readfile();
             ALGORITHM.Worst_Fit_Priority_Queue();
             MessageBox.Show("Audio files moved.");
-            NumberOfSec.Text = "";
+            //NumberOfSec.Text = "";
             }
             else
                 MessageBox.Show("Please Select Paths ");
@@ -193,7 +193,7 @@ namespace Sounds_Packing_Algorithm_Project
                 readfile();
                 ALGORITHM.Worst_Fit_Decreasing_Linear();
                 System.Windows.Forms.MessageBox.Show("Audio files moved.");
-                NumberOfSec.Text = "";
+                //NumberOfSec.Text = "";
 
             }
             else
@@ -208,7 +208,7 @@ namespace Sounds_Packing_Algorithm_Project
                 readfile();
             ALGORITHM.Worst_Fit_Decreasing_Priority_Queue();
             MessageBox.Show("Audio files moved.");
-            NumberOfSec.Text = "";
+            //NumberOfSec.Text = "";
             }
             else
                 MessageBox.Show("Please Select Paths ");
@@ -225,7 +225,7 @@ namespace Sounds_Packing_Algorithm_Project
                 ALGORITHM.First_Fit_Decreasing();
 
                 MessageBox.Show("Audio files moved.");
-                NumberOfSec.Text = "";
+              //  NumberOfSec.Text = "";
 
             }
             else MessageBox.Show("Pleas Select Paths ");

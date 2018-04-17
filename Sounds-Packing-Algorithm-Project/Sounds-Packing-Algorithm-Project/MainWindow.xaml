@@ -4,7 +4,7 @@
         Title="MainWindow" Height="600" Width="550" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded_1">
     <Grid>
         <Button x:Name="Open_TextFile" Content="Open Text File" HorizontalAlignment="Left" VerticalAlignment="Top" Width="141" Margin="19,129,0,0" Height="33" Click="Open_File_Explorer_Click" Background="#FF24CFB0" Foreground="White" FontWeight="Bold" FontFamily="Times New Roman"/>
-        <TextBox x:Name="File_Path_TextBox" HorizontalAlignment="Left" Height="33" Margin="213,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="243"/>
+        <TextBox x:Name="File_Path_TextBox" HorizontalAlignment="Left" Height="33" Margin="213,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="243" IsReadOnly="True"/>
         <Button x:Name="WorstFit1" Content="Worst Fit (Linear)" HorizontalAlignment="Left" Margin="46,258,0,0" VerticalAlignment="Top" Width="165" Height="31" Click="WorstFit1_Click" Background="#FFFEFFFF" Foreground="#FF24CFB0" FontWeight="Bold" FontFamily="Times New Roman"/>
         <Button x:Name="WorstFitD2" Content="Worst Fit Decreasing (PQ)" Margin="0,304,49.667,0" VerticalAlignment="Top" Width="165" Height="31" Click="WorstFitD2_Click" Background="White" Foreground="#FF24CFB0" FontWeight="Bold" FontFamily="Times New Roman" HorizontalAlignment="Right"/>
         <Button x:Name="WorstFitD1" Content="Worst Fit Decreasing (Linear)" HorizontalAlignment="Left" Margin="46,304,0,0" VerticalAlignment="Top" Width="165" Height="31" Click="WorstFitD1_Click" Background="White" Foreground="#FF24CFB0" FontWeight="Bold" FontFamily="Times New Roman"/>
@@ -16,7 +16,7 @@
         <Label x:Name="EnterNum" Content="Enter Number Of Seconds :" HorizontalAlignment="Left" Margin="19,50,0,0" VerticalAlignment="Top" Width="161" Height="33" FontWeight="Bold" FontFamily="Times New Roman" Background="White" Foreground="#FF24CFB0"/>
         <Label x:Name="TimerLabel" Content="0" Margin="168,472,170.667,0" VerticalAlignment="Top" Height="56" FontSize="36" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <Button x:Name="OpenFolder" Content="Open Folder" HorizontalAlignment="Left" VerticalAlignment="Top" Width="141" Margin="19,193,0,0" Height="33" Click="Open_Folder" Background="#FF24CFB0" Foreground="White" FontWeight="Bold" FontFamily="Times New Roman"/>
-        <TextBox x:Name="Folder_Path_Textbox" HorizontalAlignment="Left" Height="33" Margin="213,193,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="243"/>
+        <TextBox x:Name="Folder_Path_Textbox" HorizontalAlignment="Left" Height="33" Margin="213,193,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="243" IsReadOnly="True"/>
 
     </Grid>
 </Window>
