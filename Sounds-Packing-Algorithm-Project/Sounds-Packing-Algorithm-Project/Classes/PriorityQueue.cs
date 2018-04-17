@@ -45,6 +45,8 @@ namespace Sounds_Packing_Algorithm_Project
             int q = list[Count - 1].Item2;
             int min = Peek();
             int root = list[Count - 1].Item1;
+
+            
             list.RemoveAt(Count - 1);
             Tuple<int, int> tup = new Tuple<int, int>(root, q);
             int i = 0;
