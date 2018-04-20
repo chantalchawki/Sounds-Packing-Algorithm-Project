@@ -155,30 +155,19 @@ namespace Sounds_Packing_Algorithm_Project
         public static List<Tuple<string, string>> Mylist = new List<Tuple<string, string>>();
         public static int num;
         public static int x;
-        bool WorstFitLinearIsRunning = false;
-        bool WorstFitPQIsRunning = false;
-        bool WorstFitLinearDecreasingIsRunning = false;
-        bool WorstFitPQDecreasingIsRunning = false;
-        bool FolderFillingIsRunning = false;
-        bool FirstFitDecreasingIsRunning = false;
-        bool BestFitIsRunning = false;
+        public static bool WorstFitLinearIsRunning = false;
+        public static bool WorstFitPQIsRunning = false;
+        public static bool WorstFitLinearDecreasingIsRunning = false;
+        public static bool WorstFitPQDecreasingIsRunning = false;
+        public static bool FolderFillingIsRunning = false;
+        public static bool FirstFitDecreasingIsRunning = false;
+        public static bool BestFitIsRunning = false;
+        
+
+        
+
+
         //WORST FIT (LINEAR)
-        void WorstFitLinearByThreadingSecondStep()
-        {
-            WorstFitLinearIsRunning = true;
-            ALGORITHM.Worst_Fit_Linear();
-            MessageBox.Show("files copied using Worst fit");
-            WorstFitLinearIsRunning = false;
-        }
-        void WorstFitLinearByThreadingFirstStep()
-        {
-
-            Thread temp = new Thread(WorstFitLinearByThreadingSecondStep);
-            temp.Start();
-
-        }
-
-
         private void WorstFit1_Click(object sender, RoutedEventArgs e)
         {
             if (WorstFitLinearIsRunning == true)
@@ -189,39 +178,28 @@ namespace Sounds_Packing_Algorithm_Project
             if (validatePaths() == true)
             {
                 readfile();
-                WorstFitLinearByThreadingFirstStep();
 
-
+                Thread t = new Thread(ALGORITHM.Worst_Fit_Linear);
+                t.Start();
             }
             else
                 MessageBox.Show("Please Enter Paths ");
         }
-        void WorstFitPQByThreadingSecondStep()
-        {
-            WorstFitPQIsRunning = true;
-            ALGORITHM.Worst_Fit_Priority_Queue();
-            MessageBox.Show("files copied using Worst fit PQ");
-            WorstFitPQIsRunning = false;
-        }
-        void WorstFitPQByThreadingFirstStep()
-        {
-
-            Thread temp = new Thread(WorstFitPQByThreadingSecondStep);
-            temp.Start();
-
-        }
+        
         // WORST FIT (PRIORITY QUEUE)
         private void WorstFit2_Click(object sender, RoutedEventArgs e)
         {
             if (WorstFitPQIsRunning == true)
             {
-                MessageBox.Show("This method is already used");
+                MessageBox.Show("you are already using this method");
                 return;
             }
             if (validatePaths() == true)
             {
                 readfile();
-                WorstFitPQByThreadingFirstStep();
+
+                Thread t = new Thread(ALGORITHM.Worst_Fit_Priority_Queue);
+                t.Start();
                 //NumberOfSec.Text = "";
             }
             else
@@ -232,11 +210,16 @@ namespace Sounds_Packing_Algorithm_Project
         //WORST FIT DECREASING (LINEAR)
         private void WorstFitD1_Click(object sender, RoutedEventArgs e)
         {
+            if (WorstFitLinearDecreasingIsRunning == true)
+            {
+                MessageBox.Show("you are already using this method");
+                return;
+            }
             if (validatePaths() == true)
             {
                 readfile();
-                ALGORITHM.Worst_Fit_Decreasing_Linear();
-                System.Windows.Forms.MessageBox.Show("Audio files moved.");
+                Thread t = new Thread(ALGORITHM.Worst_Fit_Decreasing_Linear);
+                t.Start();
                 //NumberOfSec.Text = "";
 
             }
@@ -247,11 +230,16 @@ namespace Sounds_Packing_Algorithm_Project
         //WORST FIT DECREASING (PRIORITY QUEUE)
         private void WorstFitD2_Click(object sender, RoutedEventArgs e)
         {
+            if (WorstFitPQDecreasingIsRunning == true)
+            {
+                MessageBox.Show("you are already using this method");
+                return;
+            }
             if (validatePaths() == true)
             {
                 readfile();
-                ALGORITHM.Worst_Fit_Decreasing_Priority_Queue();
-                MessageBox.Show("Audio files moved.");
+                Thread t = new Thread(ALGORITHM.Worst_Fit_Decreasing_Priority_Queue);
+                t.Start();
                 //NumberOfSec.Text = "";
             }
             else
@@ -261,14 +249,18 @@ namespace Sounds_Packing_Algorithm_Project
         //FIRST FIT DECREASING
         private void FirstFit_Click(object sender, RoutedEventArgs e)
         {
+            if (FirstFitDecreasingIsRunning == true)
+            {
+                MessageBox.Show("you are already using this method");
+                return;
+            }
             if (validatePaths() == true)
             {
 
                 readfile();
 
-                ALGORITHM.First_Fit_Decreasing();
-
-                MessageBox.Show("Audio files moved.");
+                Thread t = new Thread(ALGORITHM.First_Fit_Decreasing);
+                t.Start();
                 //  NumberOfSec.Text = "";
 
             }

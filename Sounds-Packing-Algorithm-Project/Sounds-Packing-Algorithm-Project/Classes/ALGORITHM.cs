@@ -18,8 +18,8 @@ namespace Sounds_Packing_Algorithm_Project
 
         public static void Worst_Fit_Decreasing_Priority_Queue()
         {
-           
 
+            MainWindow.WorstFitPQDecreasingIsRunning = true;
             //sort the time in seconds in descending order
             MainWindow.ListofTime.Sort();
             MainWindow.ListofTime.Reverse();
@@ -95,12 +95,16 @@ namespace Sounds_Packing_Algorithm_Project
                 sw.Close();
                 f.Close();
             }
+
+            MainWindow.WorstFitPQDecreasingIsRunning = false;
         }
     
         //WORST FIT (LINEAR)//
 
         public static void Worst_Fit_Linear()
         {
+            
+            MainWindow.WorstFitLinearIsRunning = true;
             string finalpath = MainWindow.FolderPath + @"\Worst_Fit_Linear";
             //number of folders
             int c = 1;
@@ -185,6 +189,9 @@ namespace Sounds_Packing_Algorithm_Project
                 sw.Close();
                 f.Close();
             }
+
+            MessageBox.Show("Worst Fit Linear Is Done");
+            MainWindow.WorstFitLinearIsRunning = false ;
         }
 
 
@@ -192,6 +199,7 @@ namespace Sounds_Packing_Algorithm_Project
 
         public static void Worst_Fit_Decreasing_Linear()
         {
+            MainWindow.WorstFitLinearDecreasingIsRunning = true; 
             string finalpath = MainWindow.FolderPath + @"\Worst_Fit_Deacreasing_Linear";
             //number of folders
             int c = 1;
@@ -278,11 +286,14 @@ namespace Sounds_Packing_Algorithm_Project
                 f.Close();
             }
 
+            MainWindow.WorstFitLinearDecreasingIsRunning = false; 
         }
 
        // WORST FIT USING PRIORITY QUEUE
         public static void Worst_Fit_Priority_Queue()
             {
+            
+                MainWindow.WorstFitPQIsRunning = true;
             string finalpath = MainWindow.FolderPath + @"\Worst_Fit_PriorityQueue";
             //number of folders
             int c = 1;
@@ -362,10 +373,15 @@ namespace Sounds_Packing_Algorithm_Project
                 sw.Close();
                 f.Close();
             }
+
+
+            MessageBox.Show("Worst Fit PQ Is Done");
+            MainWindow.WorstFitPQIsRunning = false ;
         }
         //FIRST FIT (DECREASING)
         public static void First_Fit_Decreasing()
         {
+            MainWindow.FirstFitDecreasingIsRunning = true;
             
             //Directory.CreateDirectory(MainWindow.FolderPath+@"\First_Fit_Decreasing");
 
@@ -449,6 +465,8 @@ namespace Sounds_Packing_Algorithm_Project
                 sw.Close();
                 f.Close();
             }
+
+            MainWindow.FirstFitDecreasingIsRunning = false;
         }
 
     }
