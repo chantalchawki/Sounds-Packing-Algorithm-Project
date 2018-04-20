@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using System.Collections.Generic;
 using System.Windows;
 using System.IO;
+using System.Threading;
 using System.Windows.Threading;
 using System.Threading.Tasks;
 using win = System.Windows.Forms; //included to use folders
@@ -24,11 +25,11 @@ namespace Sounds_Packing_Algorithm_Project
         public static string FolderPath;
         bool validatePaths()
         {
-            
-            if (File_Path_TextBox.Text.Length != 0 && Folder_Path_Textbox.Text.Length!=0 && NumberOfSec.Text.Length!=0)
+
+            if (File_Path_TextBox.Text.Length != 0 && Folder_Path_Textbox.Text.Length != 0 && NumberOfSec.Text.Length != 0)
             {
                 FilePath = File_Path_TextBox.Text.ToString();
-                FolderPath = Folder_Path_Textbox.Text.ToString() ; 
+                FolderPath = Folder_Path_Textbox.Text.ToString();
                 return true;
             }
             return false;
@@ -100,7 +101,7 @@ namespace Sounds_Packing_Algorithm_Project
         {
             OpenFileDialog ofd = new OpenFileDialog();
 
-            if(ofd.ShowDialog()==true)
+            if (ofd.ShowDialog() == true)
             {
                 string filepath = ofd.FileName;
                 File_Path_TextBox.Text = filepath;
@@ -120,12 +121,12 @@ namespace Sounds_Packing_Algorithm_Project
             {
                 string folderpath = FD.SelectedPath;
                 Folder_Path_Textbox.Text = folderpath;
-               
+
             }
 
         }
 
-        
+
 
         DispatcherTimer dt = new DispatcherTimer();
 
@@ -134,7 +135,7 @@ namespace Sounds_Packing_Algorithm_Project
             dt.Interval = TimeSpan.FromSeconds(1);
             dt.Tick += ticker;
             dt.Start();
-                                                                                    
+
         }
 
         public void StopTimer()
@@ -144,41 +145,84 @@ namespace Sounds_Packing_Algorithm_Project
 
         int tim = 0;
 
-        private void ticker(object sender , EventArgs e)
+        private void ticker(object sender, EventArgs e)
         {
             tim++;
             TimerLabel.Content = tim.ToString();
         }
 
-        public static List <Tuple<int, int>> ListofTime = new List<Tuple<int, int>>();
+        public static List<Tuple<int, int>> ListofTime = new List<Tuple<int, int>>();
         public static List<Tuple<string, string>> Mylist = new List<Tuple<string, string>>();
-        public static int num ;
+        public static int num;
         public static int x;
-
+        bool WorstFitLinearIsRunning = false;
+        bool WorstFitPQIsRunning = false;
+        bool WorstFitLinearDecreasingIsRunning = false;
+        bool WorstFitPQDecreasingIsRunning = false;
+        bool FolderFillingIsRunning = false;
+        bool FirstFitDecreasingIsRunning = false;
+        bool BestFitIsRunning = false;
         //WORST FIT (LINEAR)
+        void WorstFitLinearByThreadingSecondStep()
+        {
+            WorstFitLinearIsRunning = true;
+            ALGORITHM.Worst_Fit_Linear();
+            MessageBox.Show("files copied using Worst fit");
+            WorstFitLinearIsRunning = false;
+        }
+        void WorstFitLinearByThreadingFirstStep()
+        {
+
+            Thread temp = new Thread(WorstFitLinearByThreadingSecondStep);
+            temp.Start();
+
+        }
+
+
         private void WorstFit1_Click(object sender, RoutedEventArgs e)
         {
+            if (WorstFitLinearIsRunning == true)
+            {
+                MessageBox.Show("you are already using this method");
+                return;
+            }
             if (validatePaths() == true)
             {
                 readfile();
-                ALGORITHM.Worst_Fit_Linear();
-                MessageBox.Show("Audio files moved.");
-              //  NumberOfSec.Text = "";
+                WorstFitLinearByThreadingFirstStep();
+
 
             }
             else
                 MessageBox.Show("Please Enter Paths ");
         }
+        void WorstFitPQByThreadingSecondStep()
+        {
+            WorstFitPQIsRunning = true;
+            ALGORITHM.Worst_Fit_Priority_Queue();
+            MessageBox.Show("files copied using Worst fit PQ");
+            WorstFitPQIsRunning = false;
+        }
+        void WorstFitPQByThreadingFirstStep()
+        {
 
+            Thread temp = new Thread(WorstFitPQByThreadingSecondStep);
+            temp.Start();
+
+        }
         // WORST FIT (PRIORITY QUEUE)
         private void WorstFit2_Click(object sender, RoutedEventArgs e)
         {
+            if (WorstFitPQIsRunning == true)
+            {
+                MessageBox.Show("This method is already used");
+                return;
+            }
             if (validatePaths() == true)
             {
                 readfile();
-            ALGORITHM.Worst_Fit_Priority_Queue();
-            MessageBox.Show("Audio files moved.");
-            //NumberOfSec.Text = "";
+                WorstFitPQByThreadingFirstStep();
+                //NumberOfSec.Text = "";
             }
             else
                 MessageBox.Show("Please Select Paths ");
@@ -206,9 +250,9 @@ namespace Sounds_Packing_Algorithm_Project
             if (validatePaths() == true)
             {
                 readfile();
-            ALGORITHM.Worst_Fit_Decreasing_Priority_Queue();
-            MessageBox.Show("Audio files moved.");
-            //NumberOfSec.Text = "";
+                ALGORITHM.Worst_Fit_Decreasing_Priority_Queue();
+                MessageBox.Show("Audio files moved.");
+                //NumberOfSec.Text = "";
             }
             else
                 MessageBox.Show("Please Select Paths ");
@@ -225,7 +269,7 @@ namespace Sounds_Packing_Algorithm_Project
                 ALGORITHM.First_Fit_Decreasing();
 
                 MessageBox.Show("Audio files moved.");
-              //  NumberOfSec.Text = "";
+                //  NumberOfSec.Text = "";
 
             }
             else MessageBox.Show("Pleas Select Paths ");
