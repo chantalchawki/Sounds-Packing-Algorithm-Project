@@ -30,6 +30,7 @@ namespace Sounds_Packing_Algorithm_Project
             {
                 FilePath = File_Path_TextBox.Text.ToString();
                 FolderPath = Folder_Path_Textbox.Text.ToString();
+                num = int.Parse(NumberOfSec.Text);
                 return true;
             }
             return false;
@@ -95,6 +96,43 @@ namespace Sounds_Packing_Algorithm_Project
             }
             sr.Close();
             fs.Close();
+
+        }
+        public static List<string> SecondFileNamesList;
+        public static List<Tuple<int, int>> SecondDurationAndIndexList;
+        private void SecondReadFile()
+        {
+            SecondFileNamesList = new List<string>();
+            SecondDurationAndIndexList = new List<Tuple<int, int>>();
+            FileStream fs = new FileStream(FilePath, FileMode.Open);
+            StreamReader sr = new StreamReader(fs);
+            x = int.Parse( sr.ReadLine() ) ;
+
+            Tuple<int, int> temptuple = new Tuple<int, int>(0, 0);
+            string tempname = "";
+            SecondFileNamesList.Add(tempname);
+            SecondDurationAndIndexList.Add(temptuple);
+
+            string[] field;
+            TimeSpan temptime = new TimeSpan();
+            int TempTimeInSeconds;
+            
+            for (int i = 0 ; i < x ; i++)
+            {
+                field = sr.ReadLine().Split(' ');
+                tempname = field[0];
+                temptime = TimeSpan.Parse(field[1]);
+
+                TempTimeInSeconds = temptime.Seconds + (temptime.Minutes * 60) + (temptime.Hours * 3600);
+                
+                temptuple = Tuple.Create(TempTimeInSeconds, i+1);
+                
+                SecondFileNamesList.Add(tempname);
+                SecondDurationAndIndexList.Add(temptuple);
+            }
+            sr.Close();
+            fs.Close();
+            MessageBox.Show("reading text file completed");
 
         }
         private void Open_File_Explorer_Click(object sender, RoutedEventArgs e)
@@ -274,6 +312,28 @@ namespace Sounds_Packing_Algorithm_Project
 
         private void BestFit_Click(object sender, RoutedEventArgs e)
         {
+
+        }
+
+        private void FolderFilling_Click(object sender, RoutedEventArgs e)
+        {
+            if (FolderFillingIsRunning==true)
+            {
+                MessageBox.Show("you are already running this algorithm");
+                return;
+            }
+
+            if (validatePaths() == true)
+            {
+                SecondReadFile();
+                Thread t = new Thread(ALGORITHM.Folder_Filling);
+                t.Start();
+            }
+            else
+            {
+                MessageBox.Show("please fill all the textbox correctly");
+
+            }
 
         }
     }
