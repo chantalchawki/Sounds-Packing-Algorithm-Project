@@ -502,14 +502,22 @@ namespace Sounds_Packing_Algorithm_Project
             string filesourcepath = MainWindow.FolderPath  ;
             // msh 3arf leh hnrga3lo 
             string targetfolderpath = "";
-            //get the desired amount to listen in day
+            //get the desired amount to listen in folder
+            
             int w = MainWindow.num;
+            
+            // copy the data from the main window
             List<Tuple<int, int>> DurationAndIndexList = new List<Tuple<int, int>>();
-            List<string> FilesNames = new List<string>();
-            for (int i = 0 ; i < MainWindow.SecondDurationAndIndexList.Count ; i++)
+            List<Tuple <string , string > > FilesNames = new List<Tuple <string , string > >();
+            //FilesNames.Add(Tuple.Create("",""));
+            DurationAndIndexList.Add(Tuple.Create(0,0));
+            //O(N)
+            for (int i = 0; i < MainWindow.Mylist.Count; i++)
             {
-                FilesNames.Add(MainWindow.SecondFileNamesList[i]);
-                DurationAndIndexList.Add(MainWindow.SecondDurationAndIndexList[i]);
+
+                FilesNames.Add(MainWindow.Mylist[i]);
+                
+                DurationAndIndexList.Add(MainWindow.ListofTime[i]);
             }
             MessageBox.Show("coping data to Folder Filling algorithm done");
             
@@ -520,16 +528,14 @@ namespace Sounds_Packing_Algorithm_Project
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
                 long[,] t = new long[DurationAndIndexList.Count + 1, w + 1];
-
-                SortAlgorithmThreading sorter;
+            List < List < int > > folders  = new List<List<int>>();
+           
             while (DurationAndIndexList.Count > 1)
             {
                 // by entering here that mean we still have more files to copy so we have to make new folder
                 // increase the folder indexer to make new folder
                 counter++;
-
-
-
+                
                 // Base case of recursion O(W)
                 // fill the table for each size we have with the first music file ( we made it to make it 1 based ) with 0  , O(W)
                 for (int i = 0; i <= w; i++)
@@ -556,7 +562,7 @@ namespace Sounds_Packing_Algorithm_Project
                         else
                         {
                             // assign  O(1) and comparison O(1) 
-                            t[i, j] = (t[i - 1, j] > t[i - 1, j - DurationAndIndexList[i].Item1] + 1) ? t[i - 1, j] : t[i - 1, j - DurationAndIndexList[i].Item1] + 1;
+                            t[i, j] = (t[i - 1, j] > t[i - 1, j - DurationAndIndexList[i].Item1] + DurationAndIndexList[i].Item1) ? t[i - 1, j] : t[i - 1, j - DurationAndIndexList[i].Item1] +DurationAndIndexList[i].Item1;
                         }
                     }
                 }
@@ -565,95 +571,101 @@ namespace Sounds_Packing_Algorithm_Project
                 //Get path / get the used files O(N)
                 index = DurationAndIndexList.Count - 1;
                 WeightLeft = w;
-                List <int > path = new List<int>();
+                List <int > PathToCopyAtTheEnd = new List<int>();
+                List < int > pathtodelete = new List<int>() ;
+                //see which audios we should copy O(N)
                 while (index!=0 && WeightLeft!=0)
                 {
-                    if (t[index,WeightLeft]==t[index-1,WeightLeft])
+                    // we cannot take this audio 
+                    // comparison O(1)
+                    if (WeightLeft<DurationAndIndexList[index].Item1)
                     {
-                        // we will not copy this file to the folder
-                        // so let's check the prev. file
+                        // jump to the next audio O(1)
                         index--;
                     }
                     else
                     {
-                        // we will copy this file to the folder
-                        //  check the prev. file and decrease the copied file duration from the remaning duration the folder
-                        // O (1) worst case but will happen only if the list size reached it's capacity O(N)
-                        // O(N) +O(N/2) +O(N/4) +O(N/8) so the maximum will be O (N) once 
-                        path.Add(index);
-                        // O(1)
-                        WeightLeft -= DurationAndIndexList[index].Item1;
-                        //O(1)
-                        index--;
+                        // comparison to if we skipped this audio better than taking it
+                        // comparison and accesing O(1)
+                        if (t[index - 1, WeightLeft] > t[index - 1, WeightLeft - DurationAndIndexList[index].Item1] + DurationAndIndexList[index].Item1)
+                        {
+                            // jump to the previous audio O(1)
+                            index--;
+                        }
+                        else
+                        {
+                            // taking this audio in our folder
+                            // adding to list O(1)
+                            // worst case if the size of this list reached it's limit capacity so it will expand
+                            // will take O(N) once . because all the expands will be N+N/2+N/4+N/8 = O(N)
+
+                            PathToCopyAtTheEnd.Add(DurationAndIndexList[index].Item2);
+                            pathtodelete.Add(index);
+                            // since we took this audio we should subtract it from our folder 
+                            WeightLeft -= DurationAndIndexList[index].Item1;
+                            // jump to the previous audio
+                            index--;
+                        }
                     }
                 }
-                //el path feha el files mn el a5r ll awil 
-                // number of files copied in this folder
-                //test += path.Count;
-                // create path for the folder
-                targetfolderpath = MainWindow.FolderPath+@"\Folder_filling\" + counter.ToString();
-                //create folder to put files in if not exist
-                
-                    System.IO.Directory.CreateDirectory(targetfolderpath);
-                
-                // create path for the meta data to be putted in 
-                metadatapath = targetfolderpath+"F"+counter.ToString()+"_METADATA.txt";
-                // open the meta data text file of this folder to write in it
-                //fs = new FileStream(metadatapath, FileMode.OpenOrCreate);
-                // open the meta data text file of this folder to write in it
-                 //sw = new StreamWriter(fs);
-                // write the folder name in the first line of meta data
-                //sw.WriteLine('F' + counter.ToString());
-                // variable to write the total duration of folder at the end of meta data
-                //int totalsecondsOfFolder = 0;
-                // copy and write meta data
-                // loop over all the copied folders to copy it to the folder and write it's info on the meta data text file O(W)
-                // since each audio file minimum duration will be 1 second so the path list will maximum contain W files
-                // so this loop will only iterate W times O(W)
-                for (int i = 0; i < path.Count; i++)
+                for (int i = 0; i < pathtodelete.Count; i++)
                 {
-                    //get the file name we will copy O(1)
-                    tempfilename = FilesNames[DurationAndIndexList[path[i]].Item2];
-                    // add the file duration to the total duration of the folder O(1)
-                    //totalsecondsOfFolder += DurationAndIndexList[path[i]].Item1;
-                    // change the format of file duration from int to Time format to write it in the meta data text file O(1)
-                    //tempfiletime = TimeSpan.FromSeconds(DurationAndIndexList[path[i]].Item1);
-                    // write in the meta data text file the audio file name and it's duration 
-                    //WriteLine(tempfilename + ' ' + tempfiletime.ToString());
-                    // get the old path of the audio file O(1)
-                    tempfilesourcepath = filesourcepath + @"\" + tempfilename;
-                    // get the new path of the audio file O(1)
-                    tempfiletargetpath = targetfolderpath + @"\" + tempfilename;
-                    // copy the audio file from old path to the new path with overwriting it if it is already exist
-                    System.IO.File.Copy(tempfilesourcepath, tempfiletargetpath, true);
-
-                    
-                }
-                // change the total folder duration from int to time format to write it in the meta data text file
-                //tempfiletime = TimeSpan.FromSeconds(totalsecondsOfFolder) ;
-                //// write the total duration of the folder in the end of the meta data text file
-               // sw.WriteLine(tempfiletime.ToString());
-                // close the stream write
-                //sw.Close();
-                // close the file stream 
-                //fs.Close();
-                
-                //remove copied file from our list 
-                // put the ith copied file in the end of the list to remove it in O(1)
-                // since the file at the end so no shift will happen
-                for (int i = 0; i < path.Count; i++)
-                {
-                    pathindex = path[i];
+                    pathindex = pathtodelete[i];
                     tempTuple  = DurationAndIndexList[pathindex];
                     DurationAndIndexList[pathindex] = DurationAndIndexList[DurationAndIndexList.Count - 1];
                     DurationAndIndexList.RemoveAt(DurationAndIndexList.Count - 1);
                 }
+                folders.Add( new List<int>() );
+                for (int i = 0; i < PathToCopyAtTheEnd.Count; i++ )
+                {
+
+                    folders[folders.Count-1].Add(PathToCopyAtTheEnd[i]);
+                }
+            }
+            MessageBox.Show("algorithm finished at " + stopwatch.ElapsedMilliseconds.ToString());
+                int totalsecondsOfFolder = 0;
+                //total complexity will be O(N) because at the worst case we will create folder for each file
+                //iterate on each folder we have to create O(M) which at maximum will equal N so we can say O(N)
+                for (int i = 0; i < folders.Count; i++)
+                {
+                    // get the new folder path
+                    targetfolderpath = MainWindow.FolderPath + @"\Folder_filling\F" + (i + 1).ToString();
+                    // create new folder
+                    System.IO.Directory.CreateDirectory(targetfolderpath);
+                    metadatapath = MainWindow.FolderPath + @"\Folder_filling\F" + (i+1).ToString() + "_METADATA.txt";
+                    // open file stream to write the meta data of each folder
+                    fs = new FileStream(metadatapath, FileMode.OpenOrCreate);
+                    // open stream writer to write the meta data of each folder
+                    sw = new StreamWriter(fs);
+                    // write at the begining of the meta data the folder name
+                    sw.WriteLine('F' + (i + 1).ToString());
+                    totalsecondsOfFolder = 0;
+                    //iterato on each file the folder have which will be maximum O(N)
+                    for (int j = 0; j < folders[i].Count; j++)
+                    {
+                        totalsecondsOfFolder += DateTime.Parse(FilesNames[folders[i][j]].Item2).Second;
+                        totalsecondsOfFolder += DateTime.Parse(FilesNames[folders[i][j]].Item2).Minute * 60;
+                        totalsecondsOfFolder += DateTime.Parse(FilesNames[folders[i][j]].Item2).Hour * 3600;
+                        // write at the meta data of the folder
+                        sw.WriteLine(FilesNames[folders[i][j]].Item1 + ' ' + FilesNames[folders[i][j]].Item2);
+                        // get the source path
+                        tempfilesourcepath = filesourcepath + @"\" + FilesNames[folders[i][j]].Item1;
+                        // get the target path
+                        tempfiletargetpath = targetfolderpath + @"\" + FilesNames[folders[i][j]].Item1;
+                        // copy from source to target
+                        System.IO.File.Copy(tempfilesourcepath, tempfiletargetpath, true);
+                    }
+                    tempfiletime = TimeSpan.FromSeconds(totalsecondsOfFolder);
+                    sw.WriteLine(tempfiletime.ToString());
+                    sw.Close();
+                    fs.Close();
+                }
                 
 
-            }
             stopwatch.Stop();
             MessageBox.Show(stopwatch.ElapsedMilliseconds.ToString());
             MainWindow.FolderFillingIsRunning = false;
+            }
         }
     }
-}
+

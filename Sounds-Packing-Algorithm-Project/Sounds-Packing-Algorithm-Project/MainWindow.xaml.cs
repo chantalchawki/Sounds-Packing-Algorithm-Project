@@ -325,7 +325,7 @@ namespace Sounds_Packing_Algorithm_Project
 
             if (validatePaths() == true)
             {
-                SecondReadFile();
+                readfile();
                 Thread t = new Thread(ALGORITHM.Folder_Filling);
                 t.Start();
             }
