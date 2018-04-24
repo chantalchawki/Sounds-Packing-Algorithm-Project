@@ -13,13 +13,13 @@ namespace Sounds_Packing_Algorithm_Project
     class ALGORITHM
     {
         //WORST FIT DECREASING PRIORITY QUEUE//
-        
+
         //Folder Names according to the method
         //Folder Path Entered by user
-
+        public static Stopwatch Timer = new Stopwatch();
         public static void Worst_Fit_Decreasing_Priority_Queue()
         {
-
+        
             MainWindow.WorstFitPQDecreasingIsRunning = true;
             //sort the time in seconds in descending order
             //MainWindow.ListofTime.Sort();
@@ -110,7 +110,8 @@ namespace Sounds_Packing_Algorithm_Project
 
         public static void Worst_Fit_Linear()
         {
-            
+            Timer.Start();
+       
             MainWindow.WorstFitLinearIsRunning = true;
             string finalpath = MainWindow.FolderPath + @"\Worst_Fit_Linear";
             //number of folders
@@ -196,7 +197,9 @@ namespace Sounds_Packing_Algorithm_Project
                 sw.Close();
                 f.Close();
             }
-
+            Timer.Stop();
+            MessageBox.Show("Worst Fit Linear Time : "+Timer.ElapsedMilliseconds.ToString());
+            Timer.Reset();
             MessageBox.Show("Worst Fit Linear Is Done");
             MainWindow.WorstFitLinearIsRunning = false ;
         }
@@ -299,8 +302,8 @@ namespace Sounds_Packing_Algorithm_Project
        // WORST FIT USING PRIORITY QUEUE
         public static void Worst_Fit_Priority_Queue()
             {
-            
-                MainWindow.WorstFitPQIsRunning = true;
+            Timer.Start();
+            MainWindow.WorstFitPQIsRunning = true;
             string finalpath = MainWindow.FolderPath + @"\Worst_Fit_PriorityQueue";
             //number of folders
             int c = 1;
@@ -381,13 +384,15 @@ namespace Sounds_Packing_Algorithm_Project
                 f.Close();
             }
 
-
+            Timer.Stop();
+            MessageBox.Show("Worst_Fit (PQ) Time : " + Timer.ElapsedMilliseconds.ToString());
             MessageBox.Show("Worst Fit PQ Is Done");
             MainWindow.WorstFitPQIsRunning = false ;
         }
         //FIRST FIT (DECREASING)
         public static void First_Fit_Decreasing()
         {
+            Timer.Start();
             MainWindow.FirstFitDecreasingIsRunning = true;
             
             //Directory.CreateDirectory(MainWindow.FolderPath+@"\First_Fit_Decreasing");
@@ -472,8 +477,98 @@ namespace Sounds_Packing_Algorithm_Project
                 sw.Close();
                 f.Close();
             }
+            Timer.Stop();
+            MessageBox.Show("First Fit Decreasing Time : " + Timer.ElapsedMilliseconds.ToString());
+            MessageBox.Show("First Fit Decreasing Done");
 
             MainWindow.FirstFitDecreasingIsRunning = false;
+        }
+        public static void Best_Fit()
+        {
+            Timer.Start();
+            int UserInput = MainWindow.num;//getting how many seconds the user want , O(1)
+            string finalpath = MainWindow.FolderPath + @"\Best_Fit";//seting the final path to move the audio files in it , O(1)
+            List<string> AudioNames = new List<string>();
+            string path = MainWindow.FolderPath;
+            for (int i = 0; i < MainWindow.AudioNames.Count; i++)
+            {
+                AudioNames.Add(MainWindow.AudioNames[i]);
+            }
+            List<Tuple<int, int>> AudioInfo = new List<Tuple<int, int>>();
+            for(int i = 0; i < MainWindow.AudioInfo.Count; i++)
+            {
+                AudioInfo.Add(MainWindow.AudioInfo[i]);
+            }
+            if (Directory.Exists(finalpath))
+            {
+
+                Directory.Delete(finalpath,true);
+            }
+            Directory.CreateDirectory(finalpath);
+            int NumOfFolders = 1;
+            List<int> RemainigTime = new List<int>(); //contains remainig time in each folder
+            int minindex = -1;
+            FileStream METADATA;
+            StreamWriter METADATAWRITER;
+            int minumumtime = 1000;
+            for (int i = 0; i < AudioInfo.Count; i++)
+            {
+
+                for (int j = 0; j < RemainigTime.Count; j++)
+                {
+                    if (AudioInfo[i].Item1 <= RemainigTime[j] && minumumtime > RemainigTime[j])
+                    {
+                        minindex = j;
+                        minumumtime = RemainigTime[j];
+                    }
+                }
+
+                if (minindex == -1)
+                {
+
+                    Directory.CreateDirectory(finalpath + @"\F" + NumOfFolders);//creating the first folder with will contain at least one audio
+                    METADATA = new FileStream(finalpath + @"\F" + NumOfFolders + "_METADATA.txt", FileMode.OpenOrCreate);
+                    METADATAWRITER = new StreamWriter(METADATA);
+                    METADATAWRITER.WriteLine("F" + NumOfFolders);
+                    TimeSpan temo = new TimeSpan();
+                    temo = TimeSpan.FromSeconds(AudioInfo[i].Item1);
+                    METADATAWRITER.WriteLine(AudioNames[i] + " " + temo);
+
+                    METADATAWRITER.Close();
+                    METADATA.Close();
+                    File.Copy(path+ @"\" + AudioNames[i], finalpath + @"\F" + NumOfFolders + @"\" + AudioNames[i]);
+                    RemainigTime.Add(UserInput - AudioInfo[i].Item1);
+                    NumOfFolders++;
+                }
+                else
+                {
+                    METADATA = new FileStream(finalpath + @"\F" + (minindex + 1) + "_METADATA.txt", FileMode.Append);
+                    METADATAWRITER = new StreamWriter(METADATA);
+                    TimeSpan temo = new TimeSpan();
+                    temo = TimeSpan.FromSeconds(AudioInfo[i].Item1);
+                    METADATAWRITER.WriteLine(AudioNames[i] + " " + temo);
+                    METADATAWRITER.Close();
+                    METADATA.Close();
+                    File.Copy(path+ @"\" + AudioNames[i], finalpath + @"\F" + (minindex + 1) + "/" + AudioNames[i]);
+                    RemainigTime[minindex] -= AudioInfo[i].Item1;
+                }
+                minindex = -1;
+                minumumtime = 1000;
+            }
+            for (int i = 0; i < RemainigTime.Count; i++)
+            {
+                METADATA = new FileStream(finalpath + @"\F" + (i + 1) + "_METADATA.txt", FileMode.Append);
+                METADATAWRITER = new StreamWriter(METADATA);
+                TimeSpan temo = new TimeSpan();
+                temo = TimeSpan.FromSeconds(UserInput - RemainigTime[i]);
+                METADATAWRITER.WriteLine(temo.ToString());
+                METADATAWRITER.Close();
+                METADATA.Close();
+            }
+            Timer.Stop();
+            MessageBox.Show("Best Fit Linear Time : " + Timer.ElapsedMilliseconds.ToString());
+            MessageBox.Show("Best Fit Linear Is Done");
+            MainWindow.BestFitIsRunning = false;
         }
         // Folder Filling
         public static void Folder_Filling()
@@ -669,7 +764,7 @@ namespace Sounds_Packing_Algorithm_Project
                 
 
             stopwatch.Stop();
-            MessageBox.Show(stopwatch.ElapsedMilliseconds.ToString());
+            MessageBox.Show("Folder Filling Time : "+stopwatch.ElapsedMilliseconds.ToString());
             MainWindow.FolderFillingIsRunning = false;
             }
         }

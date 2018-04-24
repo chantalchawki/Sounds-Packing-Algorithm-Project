@@ -24,7 +24,7 @@ namespace Sounds_Packing_Algorithm_Project
         public static string FilePath;
         public static string FolderPath;
         int runningAlgorithms = 0;
-        public static void updateAlgorithmcounter()
+        public void updateAlgorithmcounter()
         {
             CounterLabel.Content = runningAlgorithms.ToString();
         }
@@ -103,42 +103,31 @@ namespace Sounds_Packing_Algorithm_Project
             fs.Close();
 
         }
-        public static List<string> SecondFileNamesList;
-        public static List<Tuple<int, int>> SecondDurationAndIndexList;
+        public static List<string> AudioNames;
+        public static List<Tuple<int, int>> AudioInfo;
         private void SecondReadFile()
         {
-            SecondFileNamesList = new List<string>();
-            SecondDurationAndIndexList = new List<Tuple<int, int>>();
-            FileStream fs = new FileStream(FilePath, FileMode.Open);
-            StreamReader sr = new StreamReader(fs);
-            x = int.Parse( sr.ReadLine() ) ;
-
-            Tuple<int, int> temptuple = new Tuple<int, int>(0, 0);
-            string tempname = "";
-            SecondFileNamesList.Add(tempname);
-            SecondDurationAndIndexList.Add(temptuple);
-
-            string[] field;
-            TimeSpan temptime = new TimeSpan();
-            int TempTimeInSeconds;
-            
-            for (int i = 0 ; i < x ; i++)
-            {
-                field = sr.ReadLine().Split(' ');
-                tempname = field[0];
-                temptime = TimeSpan.Parse(field[1]);
-
-                TempTimeInSeconds = temptime.Seconds + (temptime.Minutes * 60) + (temptime.Hours * 3600);
-                
-                temptuple = Tuple.Create(TempTimeInSeconds, i+1);
-                
-                SecondFileNamesList.Add(tempname);
-                SecondDurationAndIndexList.Add(temptuple);
+            BestFitIsRunning = true;//set that we are using this method , O(1).
+            FileStream AudiosInfo = new FileStream(FilePath, FileMode.Open, FileAccess.Read);
+            StreamReader ReadFile = new StreamReader(AudiosInfo);
+            int NumberOfAudios = int.Parse(ReadFile.ReadLine());//getting how manu audio files we have in this sample ,O(1)
+            AudioNames = new List<string>();//List Contains each audio file as a string to write in metadata
+            AudioInfo = new List<Tuple<int, int>>();//List Contains index in audio names and time value
+            string fields;
+            string[] record;
+            int time;
+            int index = 0;
+            for (int i = 0; i < NumberOfAudios; i++)
+            { 
+                fields = ReadFile.ReadLine();
+                record = fields.Split(' ');
+                AudioNames.Add(record[0]);
+                time = DateTime.Parse(record[1]).Second + (DateTime.Parse(record[1]).Minute) * 60 + (DateTime.Parse(record[1]).Hour) * 3600;//converting the duration to int to deal with it
+                Tuple<int, int> AudioTuple = new Tuple<int, int>(time, index);//pair of the name and time to push to the main list L
+                AudioInfo.Add(AudioTuple);
+                index++;
             }
-            sr.Close();
-            fs.Close();
-            MessageBox.Show("reading text file completed");
-
+            ReadFile.Close();
         }
         private void Open_File_Explorer_Click(object sender, RoutedEventArgs e)
         {
@@ -319,9 +308,22 @@ namespace Sounds_Packing_Algorithm_Project
 
         private void BestFit_Click(object sender, RoutedEventArgs e)
         {
-
+            if (BestFitIsRunning == true)
+            {
+                MessageBox.Show("You Are Already Running This Algorithm");
+                return;
+            }
+            if (validatePaths() == true)
+            {
+                SecondReadFile();
+                Thread t = new Thread(ALGORITHM.Best_Fit);
+                t.Start();
+            }
+            else
+            {
+                MessageBox.Show("Please Fill The Paths Correctly");
+            }
         }
-
         private void FolderFilling_Click(object sender, RoutedEventArgs e)
         {
             if (FolderFillingIsRunning==true)
