@@ -22,9 +22,12 @@ namespace Sounds_Packing_Algorithm_Project.Classes
         }
         public void getlist ( ref List < Tuple < int , int > > L)
         {
+            L.Clear();
+
             for (int i = 0 ; i < arr.Count ; i++)
             {
-                L[i] = arr[i];
+                L.Add(arr[i]); 
+                //L[i] = arr[i];
             }
         }
         public void MergeSortUsingThreadingSecondStep (  int l, int mid, int r) 
@@ -79,26 +82,20 @@ namespace Sounds_Packing_Algorithm_Project.Classes
             // check if there is less than 4 threads run then we can send our array to be sorted by another thread
             if (count < 4)
             {
-                // increase our thread counter by 2
-                count += 2;
+                // increase our thread counter by 1
+                ++count;
                 // send the left part of current array to be sorted by thread
                 Thread t1 = new Thread(delegate() { MergeSortUsingThreadingFirstStep(l, mid); });
                 // start the thread of the left array
                 t1.Start();
-                // send the right part of current array to be sorted by thread
-                Thread t2 = new Thread(delegate() { MergeSortUsingThreadingFirstStep(mid + 1, r); });
-                // start the thread of the right array
-                t2.Start();
+                // sort the right part with the current thread
+                MergeSortUsingThreadingFirstStep(mid + 1, r);
                 // wait until the left thread to finish
                 t1.Join();
-                // wait until the right thread to finish
-                t2.Join();
                 // kill the first thread to use it later
                 t1.Abort();
-                // kill the second thread to use it later
-                t2.Abort();
                 // decrease the thread counter 
-                count -= 2;
+                --count ;
             }
             else
             {

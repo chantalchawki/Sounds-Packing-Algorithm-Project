@@ -22,7 +22,13 @@ namespace Sounds_Packing_Algorithm_Project
 
             MainWindow.WorstFitPQDecreasingIsRunning = true;
             //sort the time in seconds in descending order
-            MainWindow.ListofTime.Sort();
+            //MainWindow.ListofTime.Sort();
+            List<Tuple<int, int>> tempListOfTime= new List<Tuple<int,int>>() ;
+            
+            SortAlgorithmThreading sorter = new SortAlgorithmThreading(MainWindow.ListofTime);
+            sorter.MergeSortUsingThreadingFirstStep(0, MainWindow.ListofTime.Count - 1);
+            sorter.getlist(ref tempListOfTime);
+            
             MainWindow.ListofTime.Reverse();
             //number of folders
             int c = 1;

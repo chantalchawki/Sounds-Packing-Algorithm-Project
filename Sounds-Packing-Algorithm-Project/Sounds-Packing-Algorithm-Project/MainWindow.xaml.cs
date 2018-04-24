@@ -23,6 +23,11 @@ namespace Sounds_Packing_Algorithm_Project
         }
         public static string FilePath;
         public static string FolderPath;
+        int runningAlgorithms = 0;
+        public static void updateAlgorithmcounter()
+        {
+            CounterLabel.Content = runningAlgorithms.ToString();
+        }
         bool validatePaths()
         {
 
@@ -141,6 +146,7 @@ namespace Sounds_Packing_Algorithm_Project
 
             if (ofd.ShowDialog() == true)
             {
+
                 string filepath = ofd.FileName;
                 File_Path_TextBox.Text = filepath;
             }
@@ -215,8 +221,9 @@ namespace Sounds_Packing_Algorithm_Project
             }
             if (validatePaths() == true)
             {
+                
+                
                 readfile();
-
                 Thread t = new Thread(ALGORITHM.Worst_Fit_Linear);
                 t.Start();
             }
