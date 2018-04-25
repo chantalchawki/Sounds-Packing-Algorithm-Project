@@ -26,7 +26,7 @@ namespace Sounds_Packing_Algorithm_Project
             List<Tuple<int, int>> tempListOfTime= new List<Tuple<int,int>>() ;
             
             SortAlgorithmThreading sorter = new SortAlgorithmThreading(MainWindow.ListofTime);
-            sorter.MergeSortUsingThreadingFirstStep(0, MainWindow.ListofTime.Count - 1);
+            sorter.MergeSort();
             sorter.getlist(ref tempListOfTime);
             
             MainWindow.ListofTime.Reverse();
@@ -392,13 +392,16 @@ namespace Sounds_Packing_Algorithm_Project
         //FIRST FIT (DECREASING)
         public static void First_Fit_Decreasing()
         {
+
             Timer.Start();
             MainWindow.FirstFitDecreasingIsRunning = true;
-            
-            //Directory.CreateDirectory(MainWindow.FolderPath+@"\First_Fit_Decreasing");
 
+            //Directory.CreateDirectory(MainWindow.FolderPath+@"\First_Fit_Decreasing");
+            SortAlgorithmThreading sorter = new SortAlgorithmThreading(MainWindow.ListofTime);
+            sorter.MergeSort();
+            sorter.getlist(ref MainWindow.ListofTime);
             //sort the time in seconds in descending order
-            MainWindow.ListofTime.Sort();
+            
             MainWindow.ListofTime.Reverse();
 
             //number of folders

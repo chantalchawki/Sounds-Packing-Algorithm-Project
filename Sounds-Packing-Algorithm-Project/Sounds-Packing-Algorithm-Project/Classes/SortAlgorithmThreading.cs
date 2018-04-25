@@ -13,7 +13,7 @@ namespace Sounds_Packing_Algorithm_Project.Classes
         int count;
         public SortAlgorithmThreading(List<Tuple<int, int>> L)
         {
-            arr = new List<Tuple<int, int>>();
+            arr = new List<Tuple<int, int>>(L.Count);
             for (int i = 0 ; i < L.Count ; i++)
             {
                 arr.Add(L[i]);
@@ -23,14 +23,17 @@ namespace Sounds_Packing_Algorithm_Project.Classes
         public void getlist ( ref List < Tuple < int , int > > L)
         {
             L.Clear();
-
+            L = new List<Tuple<int, int>>(arr.Count);
             for (int i = 0 ; i < arr.Count ; i++)
             {
-                L.Add(arr[i]); 
-                //L[i] = arr[i];
+                L.Add(arr[i]);
             }
         }
-        public void MergeSortUsingThreadingSecondStep (  int l, int mid, int r) 
+        public void MergeSort()
+        {
+            MergeSortUsingThreadingFirstStep(0, arr.Count - 1);
+        }
+        private void MergeSortUsingThreadingSecondStep (  int l, int mid, int r) 
         {
 
             List<Tuple<int, int>> a = new List<Tuple<int, int>>();
@@ -72,7 +75,8 @@ namespace Sounds_Packing_Algorithm_Project.Classes
                 arr[l++] = a[i];
             }
         }
-        public void MergeSortUsingThreadingFirstStep( int l, int r) 
+
+        private void MergeSortUsingThreadingFirstStep( int l, int r) 
         {
             // base case until we have only one element to sort
             if (l >= r)
