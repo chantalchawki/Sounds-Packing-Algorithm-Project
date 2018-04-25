@@ -55,11 +55,11 @@ namespace Sounds_Packing_Algorithm_Project
                 sw.Close();
                 f.Close();
             }
-            for (int i = 1; i < MainWindow.x; i++)
+            for (int i = 1; i < MainWindow.Number_Of_Audio_Files; i++)
             {
 
                 //if there's space, move to folder with most remaining space
-                if (MainWindow.num - p.Peek() >= MainWindow.ListofTime[i].Item1)
+                if (MainWindow.Seconds_Per_Folder- p.Peek() >= MainWindow.ListofTime[i].Item1)
                 {
                     int q = p.Peek() + MainWindow.ListofTime[i].Item1;
                     string pos = MainWindow.Mylist[MainWindow.ListofTime[i].Item2].Item1;
@@ -138,7 +138,7 @@ namespace Sounds_Packing_Algorithm_Project
                 sw.Close();
                 f.Close();
             }
-            for (int i = 1; i < MainWindow.x; i++)
+            for (int i = 1; i < MainWindow.Number_Of_Audio_Files; i++)
             {
                 max = 0;
                 //check if there's a space in the current folders (before creating a new folder)
@@ -146,11 +146,11 @@ namespace Sounds_Packing_Algorithm_Project
                 a = false;
                 for (int j = 0; j < Duration.Count; j++)
                 {
-                    if (MainWindow.num - Duration[j] >= MainWindow.ListofTime[i].Item1)
+                    if (MainWindow.Seconds_Per_Folder- Duration[j] >= MainWindow.ListofTime[i].Item1)
                     {
-                        if (MainWindow.num - Duration[j] > max)
+                        if (MainWindow.Seconds_Per_Folder- Duration[j] > max)
                         {
-                            max = MainWindow.num - Duration[j];
+                            max = MainWindow.Seconds_Per_Folder- Duration[j];
                             maxnum = j;
                         }
                         a = true;
@@ -235,7 +235,7 @@ namespace Sounds_Packing_Algorithm_Project
                 sw.Close();
                 f.Close();
             }
-            for (int i = 1; i < MainWindow.x; i++)
+            for (int i = 1; i < MainWindow.Number_Of_Audio_Files; i++)
             {
                 max = 0;
                 //check if there's a space in the current folders (before creating a new folder) 
@@ -243,11 +243,11 @@ namespace Sounds_Packing_Algorithm_Project
                 a = false;
                 for (int j = 0; j < Duration.Count; j++)
                 {
-                    if (MainWindow.num - Duration[j] >= MainWindow.ListofTime[i].Item1)
+                    if (MainWindow.Seconds_Per_Folder- Duration[j] >= MainWindow.ListofTime[i].Item1)
                     {
-                        if (MainWindow.num - Duration[j] > max)
+                        if (MainWindow.Seconds_Per_Folder- Duration[j] > max)
                         {
-                            max = MainWindow.num - Duration[j];
+                            max = MainWindow.Seconds_Per_Folder- Duration[j];
                             maxnum = j;
                         }
                         a = true;
@@ -332,11 +332,11 @@ namespace Sounds_Packing_Algorithm_Project
                 sw.Close();
                 f.Close();
             }
-            for (int i = 1; i < MainWindow.x; i++)
+            for (int i = 1; i < MainWindow.Number_Of_Audio_Files; i++)
             {
 
                 //if there's space, move to folder with most remaining space
-                if (MainWindow.num - p.Peek() >= MainWindow.ListofTime[i].Item1)
+                if (MainWindow.Seconds_Per_Folder- p.Peek() >= MainWindow.ListofTime[i].Item1)
                 {
                     int q = p.Peek() + MainWindow.ListofTime[i].Item1;
 
@@ -389,6 +389,8 @@ namespace Sounds_Packing_Algorithm_Project
             MessageBox.Show("Worst Fit PQ Is Done");
             MainWindow.WorstFitPQIsRunning = false ;
         }
+
+
         //FIRST FIT (DECREASING)
         public static void First_Fit_Decreasing()
         {
@@ -428,14 +430,16 @@ namespace Sounds_Packing_Algorithm_Project
                 sw.Close();
                 f.Close();
             }
-            for (int i = 1; i < MainWindow.x; i++)
+
+            
+            for (int i = 1; i < MainWindow.Number_Of_Audio_Files; i++)
             {
                 //check if there's a space in the current folders (before creating a new folder)
                 for (int j = 0; j < Duration.Count; j++)
                 {
                     a = false;
                     //if there is a folder with remaining space, move file to it then break the loop
-                    if (MainWindow.num - Duration[j] >= MainWindow.ListofTime[i].Item1)
+                    if (MainWindow.Seconds_Per_Folder- Duration[j] >= MainWindow.ListofTime[i].Item1)
                     {
 
                         string tempname = MainWindow.Mylist[MainWindow.ListofTime[i].Item2].Item1;
@@ -486,10 +490,12 @@ namespace Sounds_Packing_Algorithm_Project
 
             MainWindow.FirstFitDecreasingIsRunning = false;
         }
+
+        //Best Fit
         public static void Best_Fit()
         {
             Timer.Start();
-            int UserInput = MainWindow.num;//getting how many seconds the user want , O(1)
+            int UserInput = MainWindow.Seconds_Per_Folder;//getting how many seconds the user want , O(1)
             string finalpath = MainWindow.FolderPath + @"\Best_Fit";//seting the final path to move the audio files in it , O(1)
             List<string> AudioNames = new List<string>();
             string path = MainWindow.FolderPath;
@@ -573,6 +579,7 @@ namespace Sounds_Packing_Algorithm_Project
             MessageBox.Show("Best Fit Linear Is Done");
             MainWindow.BestFitIsRunning = false;
         }
+
         // Folder Filling
         public static void Folder_Filling()
         {
@@ -608,7 +615,7 @@ namespace Sounds_Packing_Algorithm_Project
             string targetfolderpath = "";
             //get the desired amount to listen in folder
             
-            int w = MainWindow.num;
+            int w = MainWindow.Seconds_Per_Folder;
             
             // copy the data from the main window
             List<Tuple<int, int>> DurationAndIndexList = new List<Tuple<int, int>>();

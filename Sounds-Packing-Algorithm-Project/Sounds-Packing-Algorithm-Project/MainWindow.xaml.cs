@@ -64,7 +64,7 @@ namespace Sounds_Packing_Algorithm_Project
             string strTime;
 
             //x is the number of audios in text file
-            x = int.Parse(sr.ReadLine());
+            Number_Of_Audio_Files = int.Parse(sr.ReadLine());
             int index = 0;
 
             while (sr.Peek() != -1)
@@ -72,11 +72,9 @@ namespace Sounds_Packing_Algorithm_Project
                 //each record is an audio file writen in a new line
                 records = sr.ReadLine().Split('\n');
 
-                //////////CHANGED//////
-                for (int i = 0; i < 1; i++)
-                {
+               
                     //each record has 2 fields (name and time)
-                    fields = records[i].Split(' ');
+                    fields = records[0].Split(' ');
 
                     name = fields[0];
 
@@ -98,7 +96,7 @@ namespace Sounds_Packing_Algorithm_Project
                     index++;
 
                 }
-            }
+            
             sr.Close();
             fs.Close();
 
@@ -186,8 +184,8 @@ namespace Sounds_Packing_Algorithm_Project
 
         public static List<Tuple<int, int>> ListofTime = new List<Tuple<int, int>>();
         public static List<Tuple<string, string>> Mylist = new List<Tuple<string, string>>();
-        public static int num;
-        public static int x;
+        public static int Seconds_Per_Folder;
+        public static int Number_Of_Audio_Files;
         public static bool WorstFitLinearIsRunning = false;
         public static bool WorstFitPQIsRunning = false;
         public static bool WorstFitLinearDecreasingIsRunning = false;
