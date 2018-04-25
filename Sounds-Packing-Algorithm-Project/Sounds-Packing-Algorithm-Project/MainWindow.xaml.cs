@@ -35,7 +35,7 @@ namespace Sounds_Packing_Algorithm_Project
             {
                 FilePath = File_Path_TextBox.Text.ToString();
                 FolderPath = Folder_Path_Textbox.Text.ToString();
-                num = int.Parse(NumberOfSec.Text);
+                Seconds_Per_Folder = int.Parse(NumberOfSec.Text);
                 return true;
             }
             return false;
@@ -45,7 +45,7 @@ namespace Sounds_Packing_Algorithm_Project
             ListofTime = new List<Tuple<int, int>>();
             Mylist = new List<Tuple<string, string>>();
             //number entered by user for specific duration in each folder
-            num = int.Parse(NumberOfSec.Text);
+            Seconds_Per_Folder = int.Parse(NumberOfSec.Text);
 
             //file containing info about audios
             FileStream fs = new FileStream(File_Path_TextBox.Text, FileMode.Open);
@@ -232,7 +232,7 @@ namespace Sounds_Packing_Algorithm_Project
 
                 Thread t = new Thread(ALGORITHM.Worst_Fit_Priority_Queue);
                 t.Start();
-                //NumberOfSec.Text = "";
+               
             }
             else
                 MessageBox.Show("Please Select Paths ");
