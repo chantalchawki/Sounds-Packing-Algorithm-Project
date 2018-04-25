@@ -17,19 +17,42 @@ namespace Sounds_Packing_Algorithm_Project
 
         public static void Worst_Fit_Linear()
         {
+            Stopwatch Timer = new Stopwatch();
+            MainWindow.WorstFitLinearIsRunning = true;
             Timer.Start();
 
-            MainWindow.WorstFitLinearIsRunning = true;
-            string finalpath = MainWindow.FolderPath + @"\Worst_Fit_Linear";
-            //number of folders
+            //copy the original lists to a temp 
+            List<Tuple<string , string >> Mylist = new List<Tuple<string , string >>(MainWindow.Mylist.Capacity);
+            for ( int i = 0; i <MainWindow.Mylist.Count; i++)
+            {
+                Mylist.Add(MainWindow.Mylist[i]);
+            }
+
+            List<Tuple<int, int>> ListofTime = new List<Tuple<int, int>>(MainWindow.ListofTime.Capacity);
+            
+            for (int i = 0 ; i < MainWindow.ListofTime.Count ; i++)
+                {
+                    ListofTime.Add(MainWindow.ListofTime[i]);
+                }
+            //Folder's number 
             int Num_Folder = 1;
 
+            //copying from mainwindow 
+            int Seconds = MainWindow.Seconds_Per_Folder;
+            int Num_Audios = MainWindow.Number_Of_Audio_Files;
+
+            //Path enetered in textbox
+            string firstpath = MainWindow.FolderPath; 
+
+            //Path entered in textbox + folder with the method name = where "F" should be created
+            string finalpath = MainWindow.FolderPath + @"\Worst_Fit_Linear";
+            
             //create a new folder
             Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
 
             //list of duration in the created folders
             List<int> Duration = new List<int>();
-            bool a = false;
+            bool thereIsSpace = false;
             //set maximum to move to folder with maximum remaining duration
             int max = 0, maxnum = 0;
             //always move the first audio in the created folder
@@ -38,59 +61,57 @@ namespace Sounds_Packing_Algorithm_Project
             sw.WriteLine("F" + Num_Folder);
             if (Duration.Count == 0)
             {
-                Duration.Add(MainWindow.ListofTime[0].Item1);
-                string pos = MainWindow.Mylist[MainWindow.ListofTime[0].Item2].Item1;
-                File.Copy(MainWindow.FolderPath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
-                sw.WriteLine(MainWindow.Mylist[0].Item1 + " " + MainWindow.Mylist[0].Item2);
+                Duration.Add(ListofTime[0].Item1);
+                string pos = Mylist[ListofTime[0].Item2].Item1;
+                File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
+                sw.WriteLine(Mylist[0].Item1 + " " + Mylist[0].Item2);
                 sw.Close();
                 f.Close();
             }
-            for (int i = 1; i < MainWindow.Number_Of_Audio_Files; i++)
+            for (int i = 1; i < Num_Audios; i++)
             {
                 max = 0;
                 //check if there's a space in the current folders (before creating a new folder)
                 //get the folder with maximum remainig duration
-                a = false;
+                thereIsSpace = false;
                 for (int j = 0; j < Duration.Count; j++)
                 {
-                    if (MainWindow.Seconds_Per_Folder - Duration[j] >= MainWindow.ListofTime[i].Item1)
+                    if (Seconds - Duration[j] >= ListofTime[i].Item1)
                     {
-                        if (MainWindow.Seconds_Per_Folder - Duration[j] > max)
+                        if (Seconds - Duration[j] > max)
                         {
-                            max = MainWindow.Seconds_Per_Folder - Duration[j];
+                            max = Seconds - Duration[j];
                             maxnum = j;
                         }
-                        a = true;
+                        thereIsSpace = true;
                     }
                 }
                 //if there's space, move to folder with most remaining space
-                if (a == true)
+                if (thereIsSpace == true)
                 {
-                    string pos = MainWindow.Mylist[MainWindow.ListofTime[i].Item2].Item1;
-                    File.Copy(MainWindow.FolderPath + @"\" + pos, finalpath + @"\F" + (maxnum + 1) + @"\" + pos, true);
+                    string pos = Mylist[ListofTime[i].Item2].Item1;
+                    File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + (maxnum + 1) + @"\" + pos, true);
 
-                    // File.Move("Audios/" + (), "Audios/F" + (maxnum + 1) + "/" + (MainWindow.Mylist[MainWindow.ListofTime[i].Item2].Item1));
                     f = new FileStream(finalpath + @"\F" + (maxnum + 1) + "_METADATA.txt", FileMode.Append);
                     sw = new StreamWriter(f);
-                    sw.WriteLine(MainWindow.Mylist[i].Item1 + " " + MainWindow.Mylist[i].Item2);
+                    sw.WriteLine(Mylist[i].Item1 + " " +Mylist[i].Item2);
                     sw.Close();
                     f.Close();
-                    Duration[maxnum] += MainWindow.ListofTime[i].Item1;
+                    Duration[maxnum] += ListofTime[i].Item1;
                 }
 
                 //if there's no space, create a new folder
-                if (a == false)
+                if (thereIsSpace == false)
                 {
-                    Duration.Add(MainWindow.ListofTime[i].Item1);
+                    Duration.Add(ListofTime[i].Item1);
                     Num_Folder++;
                     Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
                     f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
                     sw = new StreamWriter(f);
                     sw.WriteLine("F" + Num_Folder);
-                    sw.WriteLine(MainWindow.Mylist[i].Item1 + " " + MainWindow.Mylist[i].Item2);
-                    string pos = MainWindow.Mylist[MainWindow.ListofTime[i].Item2].Item1;
-                    File.Copy(MainWindow.FolderPath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
-                    // File.Move("Audios/" + (), "Audios/F" + c + "/" + (MainWindow.Mylist[MainWindow.ListofTime[i].Item2].Item1));
+                    sw.WriteLine(Mylist[i].Item1 + " " + Mylist[i].Item2);
+                    string pos = Mylist[ListofTime[i].Item2].Item1;
+                    File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
                     sw.Close();
                     f.Close();
                 }
@@ -106,6 +127,7 @@ namespace Sounds_Packing_Algorithm_Project
             }
             Timer.Stop();
             MessageBox.Show("Worst Fit (Linear) time: " + Timer.ElapsedMilliseconds.ToString());
+            MessageBox.Show("Number of folders created: "+Num_Folder);
             Timer.Reset();
             MessageBox.Show("Worst Fit (Linear) is done.");
             MainWindow.WorstFitLinearIsRunning = false;
@@ -113,14 +135,39 @@ namespace Sounds_Packing_Algorithm_Project
 
 
 
-        // WORST FIT (PRIORITY QUEUE)//
+        //WORST FIT (PRIORITY QUEUE)//
         public static void Worst_Fit_Priority_Queue()
         {
+            Stopwatch Timer = new Stopwatch();
             Timer.Start();
             MainWindow.WorstFitPQIsRunning = true;
-            string finalpath = MainWindow.FolderPath + @"\Worst_Fit_PriorityQueue";
-            //number of folders
+
+            //copy the original lists to a temp 
+            List<Tuple<string , string >> Mylist = new List<Tuple<string , string >>(MainWindow.Mylist.Capacity);
+            for ( int i = 0; i <MainWindow.Mylist.Count; i++)
+            {
+                Mylist.Add(MainWindow.Mylist[i]);
+            }
+
+            List<Tuple<int, int>> ListofTime = new List<Tuple<int, int>> (MainWindow.ListofTime.Capacity) ;
+
+           for (int i = 0 ; i < MainWindow.ListofTime.Count ; i++)
+                {
+                    ListofTime.Add(MainWindow.ListofTime[i]);
+                }
+            //Folder's number 
             int Num_Folder = 1;
+
+            //copying from mainwindow 
+            int Seconds = MainWindow.Seconds_Per_Folder;
+            int Num_Audios = MainWindow.Number_Of_Audio_Files;
+
+            //Path enetered in textbox
+            string firstpath = MainWindow.FolderPath; 
+
+            //Path entered in textbox + folder with the method name = where "F" should be created
+            string finalpath = MainWindow.FolderPath + @"\Worst_Fit_PriorityQueue";
+            
 
             //create a new folder
             Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
@@ -134,34 +181,31 @@ namespace Sounds_Packing_Algorithm_Project
             sw.WriteLine("F" + Num_Folder);
             if (Duration.Count == 0)
             {
-                p.Enqueue(MainWindow.ListofTime[0].Item1, Num_Folder);
-                Duration.Add(MainWindow.ListofTime[0].Item1);
+                p.Enqueue(ListofTime[0].Item1, Num_Folder);
+                Duration.Add(ListofTime[0].Item1);
+                
+                string pos = Mylist[ListofTime[0].Item2].Item1;
 
-
-                string pos = MainWindow.Mylist[MainWindow.ListofTime[0].Item2].Item1;
-
-                File.Copy(MainWindow.FolderPath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
-                //File.Move("Audios/" + (), "Audios/F" + c + "/" + (MainWindow.Mylist[MainWindow.ListofTime[0].Item2].Item1));
-                sw.WriteLine(MainWindow.Mylist[0].Item1 + " " + MainWindow.Mylist[0].Item2);
+                File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
+                sw.WriteLine(Mylist[0].Item1 + " " + Mylist[0].Item2);
                 sw.Close();
                 f.Close();
             }
-            for (int i = 1; i < MainWindow.Number_Of_Audio_Files; i++)
+            for (int i = 1; i < Num_Audios; i++)
             {
 
                 //if there's space, move to folder with most remaining space
-                if (MainWindow.Seconds_Per_Folder - p.Peek() >= MainWindow.ListofTime[i].Item1)
+                if (Seconds - p.Peek() >= ListofTime[i].Item1)
                 {
-                    int q = p.Peek() + MainWindow.ListofTime[i].Item1;
+                    int q = p.Peek() + ListofTime[i].Item1;
 
-                    string pos = MainWindow.Mylist[MainWindow.ListofTime[i].Item2].Item1;
-                    File.Copy(MainWindow.FolderPath + @"\" + pos, finalpath + @"\F" + p.ReturnIndex() + @"\" + pos, true);
+                    string pos = Mylist[ListofTime[i].Item2].Item1;
+                    File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + p.ReturnIndex() + @"\" + pos, true);
 
-                    // File.Move("Audios/" + (), "Audios/F" + + "/" + (MainWindow.Mylist[MainWindow.ListofTime[i].Item2].Item1));
                     f = new FileStream(finalpath + @"\F" + p.ReturnIndex() + "_METADATA.txt", FileMode.Append);
                     sw = new StreamWriter(f);
-                    sw.WriteLine(MainWindow.Mylist[i].Item1 + " " + MainWindow.Mylist[i].Item2);
-                    Duration[p.ReturnIndex() - 1] += MainWindow.ListofTime[i].Item1;
+                    sw.WriteLine(Mylist[i].Item1 + " " + Mylist[i].Item2);
+                    Duration[p.ReturnIndex() - 1] += ListofTime[i].Item1;
                     p.Dequeue();
                     p.Enqueue(q, Num_Folder);
                     sw.Close();
@@ -172,17 +216,16 @@ namespace Sounds_Packing_Algorithm_Project
                 else
                 {
                     Num_Folder++;
-                    p.Enqueue(MainWindow.ListofTime[i].Item1, Num_Folder);
-                    Duration.Add(MainWindow.ListofTime[i].Item1);
+                    p.Enqueue(ListofTime[i].Item1, Num_Folder);
+                    Duration.Add(ListofTime[i].Item1);
                     Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
                     f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
                     sw = new StreamWriter(f);
                     sw.WriteLine("F" + Num_Folder);
-                    sw.WriteLine(MainWindow.Mylist[i].Item1 + " " + MainWindow.Mylist[i].Item2);
+                    sw.WriteLine(Mylist[i].Item1 + " " + Mylist[i].Item2);
 
-                    string pos = MainWindow.Mylist[MainWindow.ListofTime[i].Item2].Item1;
-                    File.Copy(MainWindow.FolderPath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos);
-
+                    string pos = Mylist[ListofTime[i].Item2].Item1;
+                    File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos);
 
                     sw.Close();
                     f.Close();
@@ -198,8 +241,10 @@ namespace Sounds_Packing_Algorithm_Project
             }
 
             Timer.Stop();
-            MessageBox.Show("Worst_Fit (PQ) time: " + Timer.ElapsedMilliseconds.ToString());
-            MessageBox.Show("Worst Fit (PQ) is Done.");
+            MessageBox.Show("Worst Fit (PQ) time: " + Timer.ElapsedMilliseconds.ToString());
+            MessageBox.Show("Number of folders created: "+Num_Folder);
+            Timer.Reset();
+            MessageBox.Show("Worst Fit (PQ) is done.");
             MainWindow.WorstFitPQIsRunning = false;
         }
 
@@ -208,79 +253,111 @@ namespace Sounds_Packing_Algorithm_Project
 
         public static void Worst_Fit_Decreasing_Linear()
         {
+            Stopwatch Timer = new Stopwatch();
+            Timer.Start();
             MainWindow.WorstFitLinearDecreasingIsRunning = true;
-            string finalpath = MainWindow.FolderPath + @"\Worst_Fit_Deacreasing_Linear";
-            //number of folders
+
+            //copy the original lists to a temp 
+            List<Tuple<string , string >> Mylist = new List<Tuple<string , string >>(MainWindow.Mylist.Capacity);
+            for ( int i = 0; i <MainWindow.Mylist.Count; i++)
+            {
+                Mylist.Add(MainWindow.Mylist[i]);
+            }
+
+            List<Tuple<int, int>> ListofTime = new List<Tuple<int, int>>(MainWindow.ListofTime.Capacity);
+
+            //multithreading merge sort
+            SortAlgorithmThreading sorter = new SortAlgorithmThreading( MainWindow.ListofTime );
+            sorter.MergeSort();
+
+            //ref -> returns a sorted copy in ListofTime
+            sorter.getlist( ref ListofTime);
+            ListofTime.Reverse();
+            for (int i = 0 ; i < ListofTime.Count ; i++)
+                {
+                MessageBox.Show(ListofTime[i].Item1 + " " + ListofTime[i].Item2);
+                }               
+            //sort the time in seconds in descending order
+
+            //Folder's number 
             int Num_Folder = 1;
+
+            //copying from mainwindow 
+            int Seconds = MainWindow.Seconds_Per_Folder;
+            int Num_Audios = MainWindow.Number_Of_Audio_Files;
+
+            //Path enetered in textbox
+            string firstpath = MainWindow.FolderPath; 
+
+            //Path entered in textbox + folder with the method name = where "F" should be created
+            string finalpath = MainWindow.FolderPath + @"\Worst_Fit_Deacreasing_Linear";
+            
             //create a new folder
             Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
             //list of duration in the created folders
             List<int> Duration = new List<int>();
-            bool a = false;
+            bool thereIsSpace = false;
             //set maximum to move to folder with maximum remaining duration
             int max = 0, maxnum = 0;
             //always move the first audio in the created folder
-            FileStream f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
+            FileStream f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.OpenOrCreate);
             StreamWriter sw = new StreamWriter(f);
             sw.WriteLine("F" + Num_Folder);
-            if (Duration.Count == 0)
-            {
-                Duration.Add(MainWindow.ListofTime[0].Item1);
+            
+                Duration.Add(ListofTime[0].Item1);
 
-                string pos = MainWindow.Mylist[MainWindow.ListofTime[0].Item2].Item1;
-                File.Copy(MainWindow.FolderPath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
-                //File.Move("Audios/" + (), "Audios/F" + c + "/" + (MainWindow.Mylist[MainWindow.ListofTime[0].Item2].Item1));
-                sw.WriteLine(MainWindow.Mylist[0].Item1 + " " + MainWindow.Mylist[0].Item2);
+                string pos = Mylist[ListofTime[0].Item2].Item1;
+                File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
+
+                sw.WriteLine(Mylist[ListofTime[0].Item2].Item1 + " " + Mylist[ListofTime[0].Item2].Item2);
                 sw.Close();
                 f.Close();
-            }
-            for (int i = 1; i < MainWindow.Number_Of_Audio_Files; i++)
+            
+            for (int i = 1; i < Num_Audios; i++)
             {
                 max = 0;
                 //check if there's a space in the current folders (before creating a new folder) 
                 //get the folder with maximum remainig duration
-                a = false;
+                thereIsSpace = false;
                 for (int j = 0; j < Duration.Count; j++)
                 {
-                    if (MainWindow.Seconds_Per_Folder - Duration[j] >= MainWindow.ListofTime[i].Item1)
+                    if (Seconds - Duration[j] >= ListofTime[i].Item1)
                     {
-                        if (MainWindow.Seconds_Per_Folder - Duration[j] > max)
+                        if (Seconds - Duration[j] > max)
                         {
-                            max = MainWindow.Seconds_Per_Folder - Duration[j];
+                            max = Seconds - Duration[j];
                             maxnum = j;
                         }
-                        a = true;
+                        thereIsSpace = true;
                     }
                 }
                 //if there's space, move to folder with most remaining space
-                if (a == true)
+                if (thereIsSpace == true)
                 {
-                    string pos = MainWindow.Mylist[MainWindow.ListofTime[i].Item2].Item1;
+                    pos = Mylist[ListofTime[i].Item2].Item1;
 
-                    File.Copy(MainWindow.FolderPath + @"\" + pos, finalpath + @"\F" + (maxnum + 1) + @"\" + pos, true);
-                    //File.Move("Audios/" + (), "Audios/F" +  + "/" + (MainWindow.Mylist[MainWindow.ListofTime[i].Item2].Item1));
+                    File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + (maxnum + 1) + @"\" + pos, true);
                     f = new FileStream(finalpath + @"\F" + (maxnum + 1) + "_METADATA.txt", FileMode.Append);
                     sw = new StreamWriter(f);
-                    sw.WriteLine(MainWindow.Mylist[i].Item1 + " " + MainWindow.Mylist[i].Item2);
+                    sw.WriteLine(Mylist[ListofTime[i].Item2].Item1 + " " + Mylist[ListofTime[i].Item2].Item2);
                     sw.Close();
                     f.Close();
-                    Duration[maxnum] += MainWindow.ListofTime[i].Item1;
+                    Duration[maxnum] += ListofTime[i].Item1;
                 }
 
                 //if there's no space, create a new folder
-                if (a == false)
+                if (thereIsSpace == false)
                 {
-                    Duration.Add(MainWindow.ListofTime[i].Item1);
+                    Duration.Add(ListofTime[i].Item1);
                     Num_Folder++;
                     Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
                     f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
                     sw = new StreamWriter(f);
                     sw.WriteLine("F" + Num_Folder);
-                    sw.WriteLine(MainWindow.Mylist[i].Item1 + " " + MainWindow.Mylist[i].Item2);
+                    sw.WriteLine(Mylist[ListofTime[i].Item2].Item1 + " " + Mylist[ListofTime[i].Item2].Item2);
 
-                    string pos = MainWindow.Mylist[MainWindow.ListofTime[i].Item2].Item1;
-                    File.Copy(MainWindow.FolderPath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
-                    // File.Move("Audios/" + (), "Audios/F" + c + "/" + (MainWindow.Mylist[MainWindow.ListofTime[i].Item2].Item1));
+                    pos = Mylist[ListofTime[i].Item2].Item1;
+                    File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
                     sw.Close();
                     f.Close();
                 }
@@ -294,7 +371,11 @@ namespace Sounds_Packing_Algorithm_Project
                 sw.Close();
                 f.Close();
             }
-
+            Timer.Stop();
+            MessageBox.Show("Worst Fit Decreasing (Linear) time: " + Timer.ElapsedMilliseconds.ToString());
+            MessageBox.Show("Number of folders created: "+Num_Folder);
+            Timer.Reset();
+            MessageBox.Show("Worst Fit Decreasing (Linear) is done.");
             MainWindow.WorstFitLinearDecreasingIsRunning = false;
         }
 
@@ -302,24 +383,41 @@ namespace Sounds_Packing_Algorithm_Project
 
         //Folder Names according to the method
         //Folder Path Entered by user
-        public static Stopwatch Timer = new Stopwatch();
         public static void Worst_Fit_Decreasing_Priority_Queue()
         {
-        
+            Stopwatch Timer = new Stopwatch();
+            Timer.Start();
             MainWindow.WorstFitPQDecreasingIsRunning = true;
-            //sort the time in seconds in descending order
-            //MainWindow.ListofTime.Sort();
-            List<Tuple<int, int>> tempListOfTime= new List<Tuple<int,int>>() ;
-            
-            SortAlgorithmThreading sorter = new SortAlgorithmThreading(MainWindow.ListofTime);
-            sorter.MergeSort();
-            sorter.getlist(ref tempListOfTime);
-            
-            MainWindow.ListofTime.Reverse();
-            //number of folders
-            int Num_Folder = 1;
-            string finalpath = MainWindow.FolderPath + @"\Worst_Fit_Decreasing_PriorityQueue";
+            //copy the original lists to a temp 
+            List<Tuple<string , string >> Mylist = new List<Tuple<string , string >>(MainWindow.Mylist.Capacity);
+            for ( int i = 0; i <MainWindow.Mylist.Count; i++)
+            {
+                Mylist.Add(MainWindow.Mylist[i]);
+            }
 
+            List<Tuple<int, int>> ListofTime = new List<Tuple<int, int>>(MainWindow.ListofTime.Capacity);
+
+            //multithreading merge sort
+            SortAlgorithmThreading sorter = new SortAlgorithmThreading( MainWindow.ListofTime );
+            sorter.MergeSort();
+
+            //ref -> returns a sorted copy in ListofTime
+            sorter.getlist( ref ListofTime);
+
+            //sort the time in seconds in descending order
+            ListofTime.Reverse();
+
+            //Folder's number 
+            int Num_Folder = 1;
+
+            //copying from mainwindow 
+            int Seconds = MainWindow.Seconds_Per_Folder;
+            int Num_Audios = MainWindow.Number_Of_Audio_Files;
+
+            //Path enetered in textbox
+            string firstpath = MainWindow.FolderPath; 
+            string finalpath = MainWindow.FolderPath + @"\Worst_Fit_Decreasing_PriorityQueue";
+            
             //create a new folder
             Directory.CreateDirectory( finalpath + @"\F" + Num_Folder);
 
@@ -330,33 +428,31 @@ namespace Sounds_Packing_Algorithm_Project
             FileStream f = new FileStream(finalpath +@"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
             StreamWriter sw = new StreamWriter(f);
             sw.WriteLine("F" + Num_Folder);
-            if (Duration.Count == 0)
-            {
-                p.Enqueue(MainWindow.ListofTime[0].Item1, Num_Folder);
-                Duration.Add(MainWindow.ListofTime[0].Item1);
-                string pos = MainWindow.Mylist[MainWindow.ListofTime[0].Item2].Item1;
-                File.Copy(MainWindow.FolderPath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
+            
+            p.Enqueue(ListofTime[0].Item1, Num_Folder);
+            Duration.Add(ListofTime[0].Item1);
+            string pos = Mylist[ListofTime[0].Item2].Item1;
+            File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
                
-                sw.WriteLine(MainWindow.Mylist[0].Item1 + " " + MainWindow.Mylist[0].Item2);
-                sw.Close();
-                f.Close();
-            }
-            for (int i = 1; i < MainWindow.Number_Of_Audio_Files; i++)
+            sw.WriteLine(Mylist[ListofTime[0].Item2].Item1 + " " + Mylist[ListofTime[0].Item2].Item2);
+            sw.Close();
+            f.Close();
+            
+            for (int i = 1; i < Num_Audios; i++)
             {
-
                 //if there's space, move to folder with most remaining space
-                if (MainWindow.Seconds_Per_Folder- p.Peek() >= MainWindow.ListofTime[i].Item1)
+                if (Seconds - p.Peek() >= ListofTime[i].Item1)
                 {
-                    int q = p.Peek() + MainWindow.ListofTime[i].Item1;
-                    string pos = MainWindow.Mylist[MainWindow.ListofTime[i].Item2].Item1;
-                    File.Copy(MainWindow.FolderPath + @"\" +pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
+                    int q = p.Peek() + ListofTime[i].Item1;
+                    pos = Mylist[ListofTime[i].Item2].Item1;
+                    File.Copy(firstpath + @"\" +pos, finalpath + @"\F" + p.ReturnIndex() + @"\" + pos, true);
                     
                     f = new FileStream(finalpath + @"\F" + p.ReturnIndex() + "_METADATA.txt", FileMode.Append);
                     sw = new StreamWriter(f);
-                    sw.WriteLine(MainWindow.Mylist[i].Item1 + " " + MainWindow.Mylist[i].Item2);
-                    Duration[p.ReturnIndex() - 1] += MainWindow.ListofTime[i].Item1;
+                    sw.WriteLine(Mylist[ListofTime[i].Item2].Item1 + " " + Mylist[ListofTime[i].Item2].Item2);
+                    Duration[p.ReturnIndex() - 1] += ListofTime[i].Item1;
+                    p.Enqueue(q, p.ReturnIndex());
                     p.Dequeue();
-                    p.Enqueue(q, Num_Folder);
                     sw.Close();
                     f.Close();
                 }
@@ -365,15 +461,15 @@ namespace Sounds_Packing_Algorithm_Project
                 else
                 {
                     Num_Folder++;
-                    p.Enqueue(MainWindow.ListofTime[i].Item1, Num_Folder);
-                    Duration.Add(MainWindow.ListofTime[i].Item1);
+                    p.Enqueue(ListofTime[i].Item1, Num_Folder);
+                    Duration.Add(ListofTime[i].Item1);
                     Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
                     f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
                     sw = new StreamWriter(f);
                     sw.WriteLine("F" + Num_Folder);
-                    sw.WriteLine(MainWindow.Mylist[i].Item1 + " " + MainWindow.Mylist[i].Item2);
-                    string pos = MainWindow.Mylist[MainWindow.ListofTime[i].Item2].Item1;
-                    File.Copy(MainWindow.FolderPath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
+                    sw.WriteLine(Mylist[ListofTime[i].Item2].Item1 + " " + Mylist[ListofTime[i].Item2].Item2);
+                     pos = Mylist[ListofTime[i].Item2].Item1;
+                    File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
                   
                     sw.Close();
                     f.Close();
@@ -381,14 +477,17 @@ namespace Sounds_Packing_Algorithm_Project
             }
             for (int l = 0; l < Num_Folder; l++)
             {
-
                 f = new FileStream(finalpath + @"\F" + (l + 1) + "_METADATA.txt", FileMode.Append);
                 sw = new StreamWriter(f);
                 sw.WriteLine(TimeSpan.FromSeconds(Duration[l]).ToString());
                 sw.Close();
                 f.Close();
             }
-
+            Timer.Stop();
+            MessageBox.Show("Worst Fit Decreasing (PQ) time: " + Timer.ElapsedMilliseconds.ToString());
+            MessageBox.Show("Number of folders created: "+Num_Folder);
+            Timer.Reset();
+            MessageBox.Show("Worst Fit Decreasing (PQ) is done.");
             MainWindow.WorstFitPQDecreasingIsRunning = false;
         }
     
@@ -397,6 +496,7 @@ namespace Sounds_Packing_Algorithm_Project
 
         public static void First_Fit_Decreasing()
         {
+            Stopwatch Timer = new Stopwatch();
             MainWindow.FirstFitDecreasingIsRunning = true;
             Timer.Start();
 
@@ -407,7 +507,6 @@ namespace Sounds_Packing_Algorithm_Project
                 Mylist.Add(MainWindow.Mylist[i]);
             }
             
-
             List<Tuple<int, int>> ListofTime = new List<Tuple<int, int>>(MainWindow.ListofTime.Capacity);
 
             //multithreading merge sort
@@ -439,23 +538,22 @@ namespace Sounds_Packing_Algorithm_Project
             
             //list of duration in the created folders
             List<int> Duration = new List<int>();
-            bool a = false;
+            bool thereIsSpace = false;
 
             //always move the first audio in the created folder
             FileStream f = new FileStream(finalPath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
             StreamWriter sw = new StreamWriter(f);
             sw.WriteLine("F" + Num_Folder);
 
-            if (Duration.Count == 0)
-            {
+            
                 Duration.Add(ListofTime[0].Item1);
                 string tempname = Mylist[ListofTime[0].Item2].Item1;
                
                 File.Copy(firstpath + @"\" + tempname, finalPath + @"\F" + Num_Folder + @"\" + tempname, true);
-                sw.WriteLine(Mylist[0].Item1 + " " + Mylist[0].Item2);
+                sw.WriteLine(Mylist[ListofTime[0].Item2].Item1 + " " + Mylist[ListofTime[0].Item2].Item2);
                 sw.Close();
                 f.Close();
-            }
+            
 
             
             for (int i = 1; i < Num_Audios ; i++)
@@ -463,28 +561,28 @@ namespace Sounds_Packing_Algorithm_Project
                 //check if there's a space in the current folders (before creating a new folder)
                 for (int j = 0; j < Duration.Count; j++)
                 {
-                    a = false;
+                    thereIsSpace = false;
                     //if there is a folder with remaining space, move file to it then break the loop
                     if (Seconds - Duration[j] >= ListofTime[i].Item1)
                     {
 
-                        string tempname = Mylist[ListofTime[i].Item2].Item1;
+                        tempname = Mylist[ListofTime[i].Item2].Item1;
                        
                         File.Copy(firstpath + '\\' + tempname, finalPath + "\\F" + (j+1) + "\\" + tempname, true);
 
                         f = new FileStream(finalPath+"\\F" + (j + 1) + "_METADATA.txt", FileMode.Append);
                         sw = new StreamWriter(f);
-                        sw.WriteLine(Mylist[i].Item1 + " " + Mylist[i].Item2);
+                        sw.WriteLine(Mylist[ListofTime[i].Item2].Item1 + " " + Mylist[ListofTime[i].Item2].Item2);
                         sw.Close();
                         f.Close();
                         Duration[j] += ListofTime[i].Item1;
-                        a = true;
+                        thereIsSpace = true;
                         break;
                     }
                 }
 
                 //if there's no space, create a new folder
-                if (a == false)
+                if (thereIsSpace == false)
                 {
                     Duration.Add(ListofTime[i].Item1);
                     Num_Folder++;
@@ -492,8 +590,8 @@ namespace Sounds_Packing_Algorithm_Project
                     f = new FileStream(finalPath+@"\F" + Num_Folder+ "_METADATA.txt", FileMode.Append);
                     sw = new StreamWriter(f);
                     sw.WriteLine("F" + Num_Folder);
-                    sw.WriteLine(Mylist[i].Item1 + " " + Mylist[i].Item2);
-                    string tempname = Mylist[ListofTime[i].Item2].Item1;
+                    sw.WriteLine(Mylist[ListofTime[i].Item2].Item1 + " " + Mylist[ListofTime[i].Item2].Item2);
+                    tempname = Mylist[ListofTime[i].Item2].Item1;
                     File.Copy(firstpath + @"\" + tempname, finalPath + @"\F" + Num_Folder + @"\" + tempname, true);
 
                     
@@ -512,6 +610,8 @@ namespace Sounds_Packing_Algorithm_Project
             }
             Timer.Stop();
             MessageBox.Show("First Fit Decreasing time: " + Timer.ElapsedMilliseconds.ToString());
+            MessageBox.Show("Number of folders created: "+Num_Folder);
+            Timer.Reset();
             MessageBox.Show("First Fit Decreasing done.");
 
             MainWindow.FirstFitDecreasingIsRunning = false;
@@ -520,6 +620,7 @@ namespace Sounds_Packing_Algorithm_Project
         //BEST FIT//
         public static void Best_Fit()
         {
+            Stopwatch Timer = new Stopwatch();
             Timer.Start();
             int UserInput = MainWindow.Seconds_Per_Folder; //getting how many seconds the user want , O(1)
             string finalpath = MainWindow.FolderPath + @"\Best_Fit"; //seting the final path to move the audio files in it , O(1)
@@ -602,6 +703,8 @@ namespace Sounds_Packing_Algorithm_Project
             }
             Timer.Stop();
             MessageBox.Show("Best Fit time: " + Timer.ElapsedMilliseconds.ToString());
+            MessageBox.Show("Number of folders created: "+NumOfFolders);
+            Timer.Reset();
             MessageBox.Show("Best Fit is done.");
             MainWindow.BestFitIsRunning = false;
         }
@@ -801,6 +904,8 @@ namespace Sounds_Packing_Algorithm_Project
 
             stopwatch.Stop();
             MessageBox.Show("Folder Filling Time: "+stopwatch.ElapsedMilliseconds.ToString());
+            MessageBox.Show("Number of folders created: "+folders.Count);
+            stopwatch.Reset();
             MainWindow.FolderFillingIsRunning = false;
             }
         }

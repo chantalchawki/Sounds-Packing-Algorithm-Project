@@ -203,7 +203,7 @@ namespace Sounds_Packing_Algorithm_Project
         {
             if (WorstFitLinearIsRunning == true)
             {
-                MessageBox.Show("you are already using this method");
+                MessageBox.Show("You are already using this method.");
                 return;
             }
             if (validatePaths() == true)
@@ -215,7 +215,7 @@ namespace Sounds_Packing_Algorithm_Project
                 t.Start();
             }
             else
-                MessageBox.Show("Please Enter Paths ");
+                MessageBox.Show("Please select paths.");
         }
         
         // WORST FIT (PRIORITY QUEUE)
@@ -223,7 +223,7 @@ namespace Sounds_Packing_Algorithm_Project
         {
             if (WorstFitPQIsRunning == true)
             {
-                MessageBox.Show("you are already using this method");
+                MessageBox.Show("You are already using this method.");
                 return;
             }
             if (validatePaths() == true)
@@ -235,7 +235,7 @@ namespace Sounds_Packing_Algorithm_Project
                
             }
             else
-                MessageBox.Show("Please Select Paths ");
+                MessageBox.Show("Please select paths.");
 
         }
 
@@ -244,7 +244,7 @@ namespace Sounds_Packing_Algorithm_Project
         {
             if (WorstFitLinearDecreasingIsRunning == true)
             {
-                MessageBox.Show("you are already using this method");
+                MessageBox.Show("You are already using this method.");
                 return;
             }
             if (validatePaths() == true)
@@ -256,7 +256,7 @@ namespace Sounds_Packing_Algorithm_Project
 
             }
             else
-                MessageBox.Show("Please Select Paths ");
+                MessageBox.Show("Please select paths.");
         }
 
         //WORST FIT DECREASING (PRIORITY QUEUE)
@@ -264,7 +264,7 @@ namespace Sounds_Packing_Algorithm_Project
         {
             if (WorstFitPQDecreasingIsRunning == true)
             {
-                MessageBox.Show("you are already using this method");
+                MessageBox.Show("You are already using this method.");
                 return;
             }
             if (validatePaths() == true)
@@ -275,7 +275,7 @@ namespace Sounds_Packing_Algorithm_Project
                 //NumberOfSec.Text = "";
             }
             else
-                MessageBox.Show("Please Select Paths ");
+                MessageBox.Show("Please select paths.");
         }
 
         //FIRST FIT DECREASING
@@ -283,7 +283,7 @@ namespace Sounds_Packing_Algorithm_Project
         {
             if (FirstFitDecreasingIsRunning == true)
             {
-                MessageBox.Show("you are already using this method");
+                MessageBox.Show("You are already using this method.");
                 return;
             }
             if (validatePaths() == true)
@@ -296,7 +296,7 @@ namespace Sounds_Packing_Algorithm_Project
                 //  NumberOfSec.Text = "";
 
             }
-            else MessageBox.Show("Pleas Select Paths ");
+            else MessageBox.Show("Pleas select paths.");
         }
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
@@ -308,7 +308,7 @@ namespace Sounds_Packing_Algorithm_Project
         {
             if (BestFitIsRunning == true)
             {
-                MessageBox.Show("You Are Already Running This Algorithm");
+                MessageBox.Show("You are already using this method.");
                 return;
             }
             if (validatePaths() == true)
@@ -319,14 +319,14 @@ namespace Sounds_Packing_Algorithm_Project
             }
             else
             {
-                MessageBox.Show("Please Fill The Paths Correctly");
+                MessageBox.Show("Please select paths.");
             }
         }
         private void FolderFilling_Click(object sender, RoutedEventArgs e)
         {
             if (FolderFillingIsRunning==true)
             {
-                MessageBox.Show("you are already running this algorithm");
+                MessageBox.Show("You are already using this method.");
                 return;
             }
 
@@ -338,8 +338,7 @@ namespace Sounds_Packing_Algorithm_Project
             }
             else
             {
-                MessageBox.Show("please fill all the textbox correctly");
-
+                MessageBox.Show("Please select paths.");
             }
 
         }
