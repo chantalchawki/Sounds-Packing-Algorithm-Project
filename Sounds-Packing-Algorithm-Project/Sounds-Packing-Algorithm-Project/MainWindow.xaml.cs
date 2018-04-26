@@ -318,6 +318,7 @@ namespace Sounds_Packing_Algorithm_Project
                 readfile();
                 Thread t = new Thread(ALGORITHM.Folder_Filling);
                 t.Start();
+                
             }
             else
             {

@@ -63,6 +63,14 @@ namespace Sounds_Packing_Algorithm_Project
             
         }
 
+        private void ClearHistory_Click(object sender, RoutedEventArgs e)
+        {
+            FileStream fs = new FileStream("HistoryFile.txt", FileMode.Truncate);
+            fs.Close();
+            table.ItemsSource = new List<HistoryClass>();
+          
+        }
+
         
     }
 }
