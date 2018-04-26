@@ -13,8 +13,20 @@ namespace Sounds_Packing_Algorithm_Project
     class ALGORITHM
     {
 
+        public static void writeAlgorithmInfo(string Name , int AudiosNum , int Seconds , int Folders , long excuetion)
+        {
+            FileStream fs = new FileStream("HistoryFile.txt", FileMode.Append);
+            StreamWriter sw = new StreamWriter(fs);
+            sw.WriteLine(Name);
+            sw.WriteLine(AudiosNum.ToString());
+            sw.WriteLine(Seconds.ToString());
+            sw.WriteLine(Folders.ToString());
+            sw.WriteLine(excuetion.ToString());
+            sw.WriteLine(DateTime.Now);
+            sw.Close();
+            fs.Close();
+        }
         //WORST FIT (LINEAR SEARCH)//
-
         public static void Worst_Fit_Linear()
         {
             Stopwatch Timer = new Stopwatch();
@@ -273,10 +285,7 @@ namespace Sounds_Packing_Algorithm_Project
             //ref -> returns a sorted copy in ListofTime
             sorter.getlist( ref ListofTime);
             ListofTime.Reverse();
-            for (int i = 0 ; i < ListofTime.Count ; i++)
-                {
-                MessageBox.Show(ListofTime[i].Item1 + " " + ListofTime[i].Item2);
-                }               
+                        
             //sort the time in seconds in descending order
 
             //Folder's number 
@@ -724,6 +733,7 @@ namespace Sounds_Packing_Algorithm_Project
 
             int pathindex;
 
+            int numberOfAudios = MainWindow.Number_Of_Audio_Files;
             string tempfilename;
 
             TimeSpan tempfiletime = new TimeSpan();
@@ -747,8 +757,8 @@ namespace Sounds_Packing_Algorithm_Project
             int w = MainWindow.Seconds_Per_Folder;
             
             // copy the data from the main window
-            List<Tuple<int, int>> DurationAndIndexList = new List<Tuple<int, int>>();
-            List<Tuple <string , string > > FilesNames = new List<Tuple <string , string > >();
+            List<Tuple<int, int>> DurationAndIndexList = new List<Tuple<int, int>>(numberOfAudios+10);
+            List<Tuple <string , string > > FilesNames = new List<Tuple <string , string > >(numberOfAudios+10);
             //FilesNames.Add(Tuple.Create("",""));
             DurationAndIndexList.Add(Tuple.Create(0,0));
             //O(N)
@@ -905,8 +915,10 @@ namespace Sounds_Packing_Algorithm_Project
             stopwatch.Stop();
             MessageBox.Show("Folder Filling Time: "+stopwatch.ElapsedMilliseconds.ToString());
             MessageBox.Show("Number of folders created: "+folders.Count);
-            stopwatch.Reset();
+            
             MainWindow.FolderFillingIsRunning = false;
+            writeAlgorithmInfo("Folder Filling", numberOfAudios, w, folders.Count, stopwatch.ElapsedMilliseconds);
+            stopwatch.Reset();
             }
         }
     }

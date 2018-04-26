@@ -6,7 +6,9 @@ using System.IO;
 using System.Threading;
 using System.Windows.Threading;
 using System.Threading.Tasks;
-using win = System.Windows.Forms; //included to use folders
+using win = System.Windows.Forms;
+using System.Windows.Controls;
+using System.Timers; //included to use folders
 
 
 namespace Sounds_Packing_Algorithm_Project
@@ -23,11 +25,8 @@ namespace Sounds_Packing_Algorithm_Project
         }
         public static string FilePath;
         public static string FolderPath;
-        int runningAlgorithms = 0;
-        public void updateAlgorithmcounter()
-        {
-            CounterLabel.Content = runningAlgorithms.ToString();
-        }
+        
+
         bool validatePaths()
         {
 
@@ -161,26 +160,10 @@ namespace Sounds_Packing_Algorithm_Project
 
         DispatcherTimer dt = new DispatcherTimer();
 
-        public void StartTimer()
-        {
-            dt.Interval = TimeSpan.FromSeconds(1);
-            dt.Tick += ticker;
-            dt.Start();
+        
 
-        }
 
-        public void StopTimer()
-        {
-            dt.Stop();
-        }
-
-        int tim = 0;
-
-        private void ticker(object sender, EventArgs e)
-        {
-            tim++;
-            TimerLabel.Content = tim.ToString();
-        }
+        
 
         public static List<Tuple<int, int>> ListofTime = new List<Tuple<int, int>>();
         public static List<Tuple<string, string>> Mylist = new List<Tuple<string, string>>();
@@ -340,6 +323,13 @@ namespace Sounds_Packing_Algorithm_Project
             {
                 MessageBox.Show("Please select paths.");
             }
+
+        }
+
+        private void History_Click(object sender, RoutedEventArgs e)
+        {
+            HistoryWindow obj = new HistoryWindow();
+            obj.Show();
 
         }
     }

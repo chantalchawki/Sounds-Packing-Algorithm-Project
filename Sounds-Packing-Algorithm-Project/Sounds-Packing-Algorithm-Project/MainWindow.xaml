@@ -14,10 +14,9 @@
         <Button x:Name="FolderFilling" Content="Folder Filling" HorizontalAlignment="Left" Margin="46,352,0,0" VerticalAlignment="Top" Width="165" Height="31" Background="White" FontFamily="Times New Roman" FontWeight="Bold" Foreground="#FF24CFB0" Click="FolderFilling_Click"/>
         <TextBox x:Name="NumberOfSec" HorizontalAlignment="Left" Height="33" Margin="213,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="243"/>
         <Label x:Name="EnterNum" Content="Enter Number Of Seconds :" HorizontalAlignment="Left" Margin="19,50,0,0" VerticalAlignment="Top" Width="161" Height="33" FontWeight="Bold" FontFamily="Times New Roman" Background="White" Foreground="#FF24CFB0"/>
-        <Label x:Name="CounterLabel" Content="0" Margin="168,472,170.667,0" VerticalAlignment="Top" Height="56" FontSize="36" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label x:Name="TimerLabel" Content="0" Margin="0,514,339,0" VerticalAlignment="Top" Height="56" FontSize="36" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <Button x:Name="OpenFolder" Content="Open Folder" HorizontalAlignment="Left" VerticalAlignment="Top" Width="141" Margin="19,193,0,0" Height="33" Click="Open_Folder" Background="#FF24CFB0" Foreground="White" FontWeight="Bold" FontFamily="Times New Roman"/>
         <TextBox x:Name="Folder_Path_Textbox" HorizontalAlignment="Left" Height="33" Margin="213,193,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="243" IsReadOnly="True"/>
+        <Button x:Name="History" Content="History" HorizontalAlignment="Left" Margin="46,474,0,0" VerticalAlignment="Top" Width="448" Height="31" Background="White" Foreground="#FF24CFB0" FontFamily="Times New Roman" FontWeight="Bold" Click="History_Click" />
 
     </Grid>
 </Window>
