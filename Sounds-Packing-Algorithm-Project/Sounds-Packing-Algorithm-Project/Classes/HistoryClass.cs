@@ -9,12 +9,12 @@ namespace Sounds_Packing_Algorithm_Project.Classes
     class HistoryClass
     {
         
-        public string algorithmName { get; set; }
-        public string numberOfAudios { get; set; }
-        public string secondsPerFolder { get; set; }
-        public string numberOfFolders { get; set; }
-        public string excuetionTime { get; set; }
-        public string date { get; set; }
+        public string Algorithm_Name { get; set; }
+        public string NumberOfAudios { get; set; }
+        public string SecondsPerFolder { get; set; }
+        public string NumberOfFolders { get; set; }
+        public string ExecutionTime { get; set; }
+        public string Date { get; set; }
         
     }
 }

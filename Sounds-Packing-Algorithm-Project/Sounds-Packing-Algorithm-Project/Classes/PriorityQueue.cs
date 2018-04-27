@@ -14,7 +14,8 @@ namespace Sounds_Packing_Algorithm_Project
         public int Count { get { return list.Count; } }
         //O(1)
         public PriorityQueue()
-        {//O(1)
+        {
+            //O(1)
             list = new List<Tuple<int, int>>();
         }
         //O(1)

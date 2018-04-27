@@ -49,12 +49,12 @@ namespace Sounds_Packing_Algorithm_Project
                 }
                 HistoryClass temp = new HistoryClass()
                 {
-                    algorithmName = args[0],
-                    numberOfAudios = args[1],
-                    secondsPerFolder = args[2],
-                    numberOfFolders = args[3],
-                    excuetionTime = args[4],
-                    date = args[5]
+                    Algorithm_Name = args[0],
+                    NumberOfAudios = args[1],
+                    SecondsPerFolder = args[2],
+                    NumberOfFolders = args[3],
+                    ExecutionTime = args[4],
+                    Date = args[5]
                 };
                 ret.Add(temp);
             }
