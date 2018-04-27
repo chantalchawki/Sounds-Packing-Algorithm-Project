@@ -16,7 +16,7 @@ namespace Sounds_Packing_Algorithm_Project
         public static void writeAlgorithmInfo(string Name, int AudiosNum, int Seconds, int Folders, long excuetion)
         {
             //O(1)
-            while (iswriting==true)
+            while (iswriting == true)
             {
                 //O(1)
                 int x = 0;
@@ -198,19 +198,15 @@ namespace Sounds_Packing_Algorithm_Project
             }
             //O(1)
             Timer.Stop();
-
-            //O(1)??
-            writeAlgorithmInfo("Worst Fit (Linear)", Num_Audios, Seconds, Num_Folder, Timer.ElapsedMilliseconds);
-
+            //O(1)
+            writeAlgorithmInfo("worst Fit Linear", Num_Audios, Seconds, Num_Folder, Timer.ElapsedMilliseconds);
             //O(1)
             MessageBox.Show("Worst Fit (Linear) time: " + Timer.ElapsedMilliseconds.ToString());
             //O(1)
             MessageBox.Show("Number of folders created: " + Num_Folder);
             //O(1)
             Timer.Reset();
-
             //O(1)
-
             MainWindow.WorstFitLinearIsRunning = false;
         }
 
@@ -365,16 +361,15 @@ namespace Sounds_Packing_Algorithm_Project
             }
             //O(1)
             Timer.Stop();
-
-            //O(1)??
-            writeAlgorithmInfo("Worst Fit (PQ)", Num_Audios, Seconds, Num_Folder, Timer.ElapsedMilliseconds);
-
+            //O(1)
+            writeAlgorithmInfo("worst Fit PQ", Num_Audios, Seconds, Num_Folder, Timer.ElapsedMilliseconds);
             //O(1)
             MessageBox.Show("Worst Fit (PQ) time: " + Timer.ElapsedMilliseconds.ToString());
             //O(1)
             MessageBox.Show("Number of folders created: " + Num_Folder);
             //O(1)
             Timer.Reset();
+
             //O(1)
             MainWindow.WorstFitPQIsRunning = false;
         }
@@ -534,7 +529,7 @@ namespace Sounds_Packing_Algorithm_Project
                     //O(1)
                     //sw.Close();
                     //O(1)??
-                   // f.Close();
+                    // f.Close();
                 }
             }
             //O(M), here we write at the end of each MetaData the total time in the folder 
@@ -557,19 +552,12 @@ namespace Sounds_Packing_Algorithm_Project
             //O(1), sending the info of the algorithm to the history table
             writeAlgorithmInfo("worst Fit Decreasing linear", Num_Audios, Seconds, Num_Folder, Timer.ElapsedMilliseconds);
             //O(1) , confirming the time for the user
-
-            //O(1), sending the info of the algorithm to the history table
-            writeAlgorithmInfo("Worst Fit Decreasing (Linear)", Num_Audios, Seconds, Num_Folder, Timer.ElapsedMilliseconds);
-            //O(1) , confirming the time for the user
-
             MessageBox.Show("Worst Fit Decreasing (Linear) time: " + Timer.ElapsedMilliseconds.ToString());
             //O(1) , confirming the number of folders to the user
             MessageBox.Show("Number of folders created: " + Num_Folder);
             //O(1) , reseting the time to use it in another algorithm
             Timer.Reset();
-
             //O(1) , ending the algorithm and turning it off
-
             MainWindow.WorstFitLinearDecreasingIsRunning = false;
         }
 
@@ -607,7 +595,7 @@ namespace Sounds_Packing_Algorithm_Project
             //N*Log(N)
             sorter.MergeSort();
 
-            
+
             //O(N)
             sorter.getlist(ref ListofTime);
 
@@ -679,7 +667,7 @@ namespace Sounds_Packing_Algorithm_Project
                     //O(1) , writing in its meta data the info of the selected audio
                     //f = new FileStream(finalpath + @"\F" + p.ReturnIndex() + "_METADATA.txt", FileMode.Append);
                     //O(1)??
-                   //sw = new StreamWriter(f);
+                    //sw = new StreamWriter(f);
                     //O(1)??
                     //sw.WriteLine(Mylist[ListofTime[i].Item2].Item1 + " " + Mylist[ListofTime[i].Item2].Item2);
                     //O(1)
@@ -752,7 +740,7 @@ namespace Sounds_Packing_Algorithm_Project
             //O(1)??
             Timer.Stop();
             //O(1)??
-            writeAlgorithmInfo("Worst Fit Decreasing (PQ)", Num_Audios, Seconds, Num_Folder, Timer.ElapsedMilliseconds);
+            writeAlgorithmInfo("worst Fit Decreasing PQ", Num_Audios, Seconds, Num_Folder, Timer.ElapsedMilliseconds);
 
             //O(1)
             MessageBox.Show("Worst Fit Decreasing (PQ) time: " + Timer.ElapsedMilliseconds.ToString());
@@ -945,14 +933,11 @@ namespace Sounds_Packing_Algorithm_Project
             }
             //O(1)
             Timer.Stop();
-            //O(1)??
-            writeAlgorithmInfo("First Fit Decreasing", Num_Audios, Seconds, Num_Folder, Timer.ElapsedMilliseconds);
             //O(1)
             MessageBox.Show("First Fit Decreasing time: " + Timer.ElapsedMilliseconds.ToString());
             //O(1)
             MessageBox.Show("Number of folders created: " + Num_Folder);
             //O(1)
-
             Timer.Reset();
             //O(1)
             MainWindow.FirstFitDecreasingIsRunning = false;
@@ -1285,7 +1270,7 @@ namespace Sounds_Packing_Algorithm_Project
                     DurationAndIndexList.RemoveAt(DurationAndIndexList.Count - 1);
                 }
                 //O(1)
-                folders.Add(new List<int>(PathToCopyAtTheEnd.Capacity+1));
+                folders.Add(new List<int>(PathToCopyAtTheEnd.Capacity + 1));
                 // O(min (W,N) 
                 for (int i = 0; i < PathToCopyAtTheEnd.Count; i++)
                 {
@@ -1293,13 +1278,8 @@ namespace Sounds_Packing_Algorithm_Project
                     folders[folders.Count - 1].Add(PathToCopyAtTheEnd[i]);
                 }
             }
-
             //O(1)
             //int totalsecondsOfFolder = 0;
-
-
-            //O(1)
-            int totalsecondsOfFolder = 0;
             //total complexity will be O(N) because at the worst case we will create folder for each file
             //iterate on each folder we have to create O(M) which at maximum will equal N so we can say O(N)
             //for (int i = 0; i < folders.Count; i++)
