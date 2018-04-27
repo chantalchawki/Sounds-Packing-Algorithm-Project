@@ -178,15 +178,13 @@ namespace Sounds_Packing_Algorithm_Project
             //O(1)??
             Timer.Stop();
             //O(1)??
-            writeAlgorithmInfo("worst Fit Decreasing PQ", Num_Audios, Seconds, Num_Folder, Timer.ElapsedMilliseconds);
+            writeAlgorithmInfo("Worst Fit (Linear)", Num_Audios, Seconds, Num_Folder, Timer.ElapsedMilliseconds);
             //O(1)
             MessageBox.Show("Worst Fit (Linear) time: " + Timer.ElapsedMilliseconds.ToString());
             //O(1)
             MessageBox.Show("Number of folders created: " + Num_Folder);
             //O(1)??
             Timer.Reset();
-            //O(1)
-            MessageBox.Show("Worst Fit (Linear) is done.");
             //O(1)??
             MainWindow.WorstFitLinearIsRunning = false;
         }
@@ -343,15 +341,13 @@ namespace Sounds_Packing_Algorithm_Project
             //O(1)??
             Timer.Stop();
             //O(1)??
-            writeAlgorithmInfo("worst Fit Decreasing PQ", Num_Audios, Seconds, Num_Folder, Timer.ElapsedMilliseconds);
+            writeAlgorithmInfo("Worst Fit (PQ)", Num_Audios, Seconds, Num_Folder, Timer.ElapsedMilliseconds);
             //O(1)
             MessageBox.Show("Worst Fit (PQ) time: " + Timer.ElapsedMilliseconds.ToString());
             //O(1)
             MessageBox.Show("Number of folders created: " + Num_Folder);
             //O(1)
             Timer.Reset();
-            //O(1)
-            MessageBox.Show("Worst Fit (PQ) is done.");
             //O(1)
             MainWindow.WorstFitPQIsRunning = false;
         }
@@ -531,15 +527,13 @@ namespace Sounds_Packing_Algorithm_Project
             //O(1)??
             Timer.Stop();
             //O(1)??
-            writeAlgorithmInfo("worst Fit Decreasing PQ", Num_Audios, Seconds, Num_Folder, Timer.ElapsedMilliseconds);
+            writeAlgorithmInfo("Worst Fit Decreasing (Linear)", Num_Audios, Seconds, Num_Folder, Timer.ElapsedMilliseconds);
             //O(1)
             MessageBox.Show("Worst Fit Decreasing (Linear) time: " + Timer.ElapsedMilliseconds.ToString());
             //O(1)
             MessageBox.Show("Number of folders created: " + Num_Folder);
             //O(1)??
             Timer.Reset();
-            //O(1)
-            MessageBox.Show("Worst Fit Decreasing (Linear) is done.");
             //O(1)
             MainWindow.WorstFitLinearDecreasingIsRunning = false;
         }
@@ -706,7 +700,7 @@ namespace Sounds_Packing_Algorithm_Project
             //O(1)??
             Timer.Stop();
             //O(1)??
-            writeAlgorithmInfo("worst Fit Decreasing PQ", Num_Audios, Seconds, Num_Folder, Timer.ElapsedMilliseconds);
+            writeAlgorithmInfo("Worst Fit Decreasing (PQ)", Num_Audios, Seconds, Num_Folder, Timer.ElapsedMilliseconds);
 
             //O(1)
             MessageBox.Show("Worst Fit Decreasing (PQ) time: " + Timer.ElapsedMilliseconds.ToString());
@@ -714,8 +708,6 @@ namespace Sounds_Packing_Algorithm_Project
             MessageBox.Show("Number of folders created: " + Num_Folder);
             //O(1)??
             Timer.Reset();
-            //O(1)
-            MessageBox.Show("Worst Fit Decreasing (PQ) is done.");
             //O(1)
             MainWindow.WorstFitPQDecreasingIsRunning = false;
         }
@@ -901,14 +893,14 @@ namespace Sounds_Packing_Algorithm_Project
             }
             //O(1)??
             Timer.Stop();
+            //O(1)??
+            writeAlgorithmInfo("First Fit Decreasing", Num_Audios, Seconds, Num_Folder, Timer.ElapsedMilliseconds);
             //O(1)
             MessageBox.Show("First Fit Decreasing time: " + Timer.ElapsedMilliseconds.ToString());
             //O(1)
             MessageBox.Show("Number of folders created: " + Num_Folder);
             //O(1)??
             Timer.Reset();
-            //O(1)
-            MessageBox.Show("First Fit Decreasing done.");
             //O(1)
             MainWindow.FirstFitDecreasingIsRunning = false;
         }
@@ -1058,8 +1050,6 @@ namespace Sounds_Packing_Algorithm_Project
             //O(1)??
             Timer.Reset();
             //O(1)
-            MessageBox.Show("Best Fit is done.");
-            //O(1)
             MainWindow.BestFitIsRunning = false;
         }
 
@@ -1118,8 +1108,6 @@ namespace Sounds_Packing_Algorithm_Project
                 //O(1)
                 DurationAndIndexList.Add(MainWindow.ListofTime[i]);
             }
-            //O(1)
-            MessageBox.Show("Coping data to Folder Filling algorithm done.");
 
             // index for the folder to rename it with it's index
             //O(1)
@@ -1251,8 +1239,6 @@ namespace Sounds_Packing_Algorithm_Project
                     folders[folders.Count - 1].Add(PathToCopyAtTheEnd[i]);
                 }
             }
-            //O(1)
-            MessageBox.Show("algorithm finished at " + stopwatch.ElapsedMilliseconds.ToString());
 
             //O(1)
             int totalsecondsOfFolder = 0;
