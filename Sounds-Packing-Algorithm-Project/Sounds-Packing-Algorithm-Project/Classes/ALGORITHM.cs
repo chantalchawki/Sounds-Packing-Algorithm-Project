@@ -85,30 +85,30 @@ namespace Sounds_Packing_Algorithm_Project
             string finalpath = MainWindow.FolderPath + @"\Worst_Fit_Linear";
 
             //create a new folder,O(1)
-            Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
+            //Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
 
             //list of duration in the created folders,O(1)
             List<int> Duration = new List<int>();
             //set maximum to move to folder with maximum remaining duration,O(1)
             int max = 0, maxnum = 0;
             //always move the first audio in the created folder,O(1)
-            FileStream f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.OpenOrCreate);
+            //FileStream f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.OpenOrCreate);
             //O(1)
-            StreamWriter sw = new StreamWriter(f);
+            //StreamWriter sw = new StreamWriter(f);
             //O(1)
-            sw.WriteLine("F" + Num_Folder);
+            //sw.WriteLine("F" + Num_Folder);
             //O(1)
             Duration.Add(ListofTime[0].Item1);
             //O(1)
             string pos = Mylist[ListofTime[0].Item2].Item1;
             //O(1)
-            File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
+            //File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
             //O(1)
-            sw.WriteLine(Mylist[0].Item1 + " " + Mylist[0].Item2);
+            //sw.WriteLine(Mylist[0].Item1 + " " + Mylist[0].Item2);
             //O(1)
-            sw.Close();
+            //sw.Close();
             //O(1)
-            f.Close();
+            //f.Close();
             //O(N*M)
             for (int i = 1; i < Num_Audios; i++)
             {
@@ -139,17 +139,17 @@ namespace Sounds_Packing_Algorithm_Project
                     //O(1)
                     pos = Mylist[i].Item1;
                     //O(1)
-                    File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + (maxnum + 1) + @"\" + pos, true);
+                    //File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + (maxnum + 1) + @"\" + pos, true);
                     //O(1)
-                    f = new FileStream(finalpath + @"\F" + (maxnum + 1) + "_METADATA.txt", FileMode.Append);
+                    //f = new FileStream(finalpath + @"\F" + (maxnum + 1) + "_METADATA.txt", FileMode.Append);
                     //O(1)
-                    sw = new StreamWriter(f);
+                    //sw = new StreamWriter(f);
                     //O(1)
-                    sw.WriteLine(Mylist[i].Item1 + " " + Mylist[i].Item2);
+                    //sw.WriteLine(Mylist[i].Item1 + " " + Mylist[i].Item2);
                     //O(1)
-                    sw.Close();
+                    //sw.Close();
                     //O(1)
-                    f.Close();
+                    //f.Close();
                     //O(1)
                     Duration[maxnum] += ListofTime[i].Item1;
                 }
@@ -163,38 +163,38 @@ namespace Sounds_Packing_Algorithm_Project
                     //O(1)
                     Num_Folder++;
                     //O(1)
-                    Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
+                    //Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
                     //O(1)
-                    f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
+                    //f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
                     //O(1)
-                    sw = new StreamWriter(f);
+                    //sw = new StreamWriter(f);
                     //O(1)
-                    sw.WriteLine("F" + Num_Folder);
+                    //sw.WriteLine("F" + Num_Folder);
                     //O(1)
-                    sw.WriteLine(Mylist[i].Item1 + " " + Mylist[i].Item2);
+                    //sw.WriteLine(Mylist[i].Item1 + " " + Mylist[i].Item2);
                     //O(1)
                     pos = Mylist[ListofTime[i].Item2].Item1;
                     //O(1)
-                    File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
+                    //File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
                     //O(1)
-                    sw.Close();
+                    //sw.Close();
                     //O(1)
-                    f.Close();
+                    //f.Close();
                 }
             }
             //O(M)
             for (int l = 0; l < Num_Folder; l++)
             {
                 //O(1)
-                f = new FileStream(finalpath + @"\F" + (l + 1) + "_METADATA.txt", FileMode.Append);
+                //f = new FileStream(finalpath + @"\F" + (l + 1) + "_METADATA.txt", FileMode.Append);
                 //O(1)
-                sw = new StreamWriter(f);
+                //sw = new StreamWriter(f);
                 //O(1)
-                sw.WriteLine(TimeSpan.FromSeconds(Duration[l]).ToString());
+                //sw.WriteLine(TimeSpan.FromSeconds(Duration[l]).ToString());
                 //O(1)
-                sw.Close();
+                //sw.Close();
                 //O(1)
-                f.Close();
+                //f.Close();
             }
             //O(1)
             Timer.Stop();
@@ -255,7 +255,7 @@ namespace Sounds_Packing_Algorithm_Project
 
 
             //create a new folder , O(1)
-            Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
+            //Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
 
             //list of duration in the created folders
             //O(1)
@@ -263,11 +263,11 @@ namespace Sounds_Packing_Algorithm_Project
             //O(1)
             List<int> Duration = new List<int>();
             //always move the first audio in the created folder,O(1)
-            FileStream f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
+            //FileStream f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
             //O(1)
-            StreamWriter sw = new StreamWriter(f);
+            //StreamWriter sw = new StreamWriter(f);
             //O(1)
-            sw.WriteLine("F" + Num_Folder);
+            //sw.WriteLine("F" + Num_Folder);
 
             //O(1) the priority queue is empty
             p.Enqueue(ListofTime[0].Item1, Num_Folder);
@@ -276,13 +276,13 @@ namespace Sounds_Packing_Algorithm_Project
             //O(1)
             string pos = Mylist[ListofTime[0].Item2].Item1;
             //O(1)
-            File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
+            //File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
             //O(1)
-            sw.WriteLine(Mylist[0].Item1 + " " + Mylist[0].Item2);
+            //sw.WriteLine(Mylist[0].Item1 + " " + Mylist[0].Item2);
             //O(1)
-            sw.Close();
+            //sw.Close();
             //O(1)
-            f.Close();
+            //f.Close();
             //O(N*log (M) )
             int q;
             for (int i = 1; i < Num_Audios; i++)
@@ -297,13 +297,13 @@ namespace Sounds_Packing_Algorithm_Project
                     //O(1)
                     pos = Mylist[ListofTime[i].Item2].Item1;
                     //O(1)
-                    File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + p.ReturnIndex() + @"\" + pos, true);
+                    //File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + p.ReturnIndex() + @"\" + pos, true);
                     //O(1)
-                    f = new FileStream(finalpath + @"\F" + p.ReturnIndex() + "_METADATA.txt", FileMode.Append);
+                    //f = new FileStream(finalpath + @"\F" + p.ReturnIndex() + "_METADATA.txt", FileMode.Append);
                     //O(1)
-                    sw = new StreamWriter(f);
+                    //sw = new StreamWriter(f);
                     //O(1)
-                    sw.WriteLine(Mylist[i].Item1 + " " + Mylist[i].Item2);
+                    //sw.WriteLine(Mylist[i].Item1 + " " + Mylist[i].Item2);
                     //O(1)
                     Duration[p.ReturnIndex() - 1] += ListofTime[i].Item1;
                     //O(log (M) )
@@ -311,9 +311,9 @@ namespace Sounds_Packing_Algorithm_Project
                     //O(Log (M) )
                     p.Enqueue(q, Num_Folder);
                     //O(1)
-                    sw.Close();
+                    //sw.Close();
                     //O(1)
-                    f.Close();
+                    //f.Close();
                 }
                 //O(Log (M))
                 //if there's no space, create a new folder
@@ -326,38 +326,38 @@ namespace Sounds_Packing_Algorithm_Project
                     //O(1)
                     Duration.Add(ListofTime[i].Item1);
                     //O(1)
-                    Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
+                    //Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
                     //O(1)
-                    f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
+                    //f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
                     //O(1)
-                    sw = new StreamWriter(f);
+                    //sw = new StreamWriter(f);
                     //O(1)
-                    sw.WriteLine("F" + Num_Folder);
+                    //sw.WriteLine("F" + Num_Folder);
                     //O(1)
-                    sw.WriteLine(Mylist[i].Item1 + " " + Mylist[i].Item2);
+                    //sw.WriteLine(Mylist[i].Item1 + " " + Mylist[i].Item2);
                     //O(1)
                     pos = Mylist[ListofTime[i].Item2].Item1;
                     //O(1)
-                    File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
+                    //File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos,true);
                     //O(1)
-                    sw.Close();
+                    //sw.Close();
                     //O(1)
-                    f.Close();
+                    //f.Close();
                 }
             }
             //O(M)
             for (int l = 0; l < Num_Folder; l++)
             {
                 //O(1)
-                f = new FileStream(finalpath + @"\F" + (l + 1) + "_METADATA.txt", FileMode.Append);
+                //f = new FileStream(finalpath + @"\F" + (l + 1) + "_METADATA.txt", FileMode.Append);
                 //O(1)
-                sw = new StreamWriter(f);
+                //sw = new StreamWriter(f);
                 //O(1)
-                sw.WriteLine(TimeSpan.FromSeconds(Duration[l]).ToString());
+                //sw.WriteLine(TimeSpan.FromSeconds(Duration[l]).ToString());
                 //O(1)
-                sw.Close();
+                //sw.Close();
                 //O(1)
-                f.Close();
+                //f.Close();
             }
             //O(1)
             Timer.Stop();
@@ -394,7 +394,7 @@ namespace Sounds_Packing_Algorithm_Project
             {
                 Mylist.Add(MainWindow.Mylist[i]);
             }
-            //A list contains pair of integers the first int is for the time of the audio and second its index in the above list
+            //a list contains pair of integers the first int is for the time of the audio and second its index in the above list
             //O(1)
             List<Tuple<int, int>> ListofTime = new List<Tuple<int, int>>(MainWindow.ListofTime.Capacity);
 
@@ -432,7 +432,7 @@ namespace Sounds_Packing_Algorithm_Project
 
             //create a new folder
             //O(1)
-            Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
+            //Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
             //list of duration in the created folders
             //O(1)
             List<int> Duration = new List<int>();
@@ -441,23 +441,23 @@ namespace Sounds_Packing_Algorithm_Project
             int max = 0, maxnum = 0;
             //always move the first audio in the created folder
             //O(1)
-            FileStream f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.OpenOrCreate);
+            //FileStream f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.OpenOrCreate);
             //O(1)
-            StreamWriter sw = new StreamWriter(f);
+            //StreamWriter sw = new StreamWriter(f);
             //O(1)
-            sw.WriteLine("F" + Num_Folder);
+            //sw.WriteLine("F" + Num_Folder);
             //O(1)     
             Duration.Add(ListofTime[0].Item1);
             //O(1)
             string pos = Mylist[ListofTime[0].Item2].Item1;
             //O(1)
-            File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
+            //File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
             //O(1)
-            sw.WriteLine(Mylist[ListofTime[0].Item2].Item1 + " " + Mylist[ListofTime[0].Item2].Item2);
+            //sw.WriteLine(Mylist[ListofTime[0].Item2].Item1 + " " + Mylist[ListofTime[0].Item2].Item2);
             //O(1)
-            sw.Close();
+            //sw.Close();
             //O(1)
-            f.Close();
+            //f.Close();
             //O(N*M)
             for (int i = 1; i < Num_Audios; i++)
             {
@@ -489,17 +489,17 @@ namespace Sounds_Packing_Algorithm_Project
                     //O(1)
                     pos = Mylist[ListofTime[i].Item2].Item1;
                     //O(1)
-                    File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + (maxnum + 1) + @"\" + pos, true);
+                    //File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + (maxnum + 1) + @"\" + pos, true);
                     //O(1)
-                    f = new FileStream(finalpath + @"\F" + (maxnum + 1) + "_METADATA.txt", FileMode.Append);
+                    //f = new FileStream(finalpath + @"\F" + (maxnum + 1) + "_METADATA.txt", FileMode.Append);
                     //O(1)
-                    sw = new StreamWriter(f);
+                    //sw = new StreamWriter(f);
                     //O(1)
-                    sw.WriteLine(Mylist[ListofTime[i].Item2].Item1 + " " + Mylist[ListofTime[i].Item2].Item2);
+                    //sw.WriteLine(Mylist[ListofTime[i].Item2].Item1 + " " + Mylist[ListofTime[i].Item2].Item2);
                     //O(1)
-                    sw.Close();
+                    //sw.Close();
                     //O(1)
-                    f.Close();
+                    //f.Close();
                     //O(1)
                     Duration[maxnum] += ListofTime[i].Item1;
                 }
@@ -513,23 +513,23 @@ namespace Sounds_Packing_Algorithm_Project
                     //O(1)
                     Num_Folder++;
                     //O(1)
-                    Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
+                    //Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
                     //O(1)
-                    f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
+                    //f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
                     //O(1)
-                    sw = new StreamWriter(f);
+                    //sw = new StreamWriter(f);
                     //O(1)
-                    sw.WriteLine("F" + Num_Folder);
+                    //sw.WriteLine("F" + Num_Folder);
                     //O(1)
-                    sw.WriteLine(Mylist[ListofTime[i].Item2].Item1 + " " + Mylist[ListofTime[i].Item2].Item2);
+                    //sw.WriteLine(Mylist[ListofTime[i].Item2].Item1 + " " + Mylist[ListofTime[i].Item2].Item2);
                     //O(1)
                     pos = Mylist[ListofTime[i].Item2].Item1;
                     //O(1)
-                    File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
+                    //File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
                     //O(1)
-                    sw.Close();
-                    //O(1)
-                    f.Close();
+                    //sw.Close();
+                    //O(1)??
+                    // f.Close();
                 }
             }
             //O(M), here we write at the end of each MetaData the total time in the folder 
@@ -537,15 +537,15 @@ namespace Sounds_Packing_Algorithm_Project
             {
 
                 //O(1)
-                f = new FileStream(finalpath + @"\F" + (l + 1) + "_METADATA.txt", FileMode.Append);
+                //f = new FileStream(finalpath + @"\F" + (l + 1) + "_METADATA.txt", FileMode.Append);
                 //O(1)
-                sw = new StreamWriter(f);
+                //sw = new StreamWriter(f);
                 //O(1)
-                sw.WriteLine(TimeSpan.FromSeconds(Duration[l]).ToString());
+                //sw.WriteLine(TimeSpan.FromSeconds(Duration[l]).ToString());
                 //O(1)
-                sw.Close();
+                //sw.Close();
                 //O(1)
-                f.Close();
+                //f.Close();
             }
             //O(1) , here we stop the timer for the algorithm
             Timer.Stop();
@@ -573,7 +573,7 @@ namespace Sounds_Packing_Algorithm_Project
         {
             //O(1), starting the timer for this algorithm 
             Stopwatch Timer = new Stopwatch();
-            //O(1)
+            //O(1)??
             Timer.Start();
             //O(1) , setting that we are using this algorithm currently
             MainWindow.WorstFitPQDecreasingIsRunning = true;
@@ -621,7 +621,7 @@ namespace Sounds_Packing_Algorithm_Project
 
             //create a new folder
             //O(1) , the first folder for the first audio
-            Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
+            //Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
 
             //list of duration in the created folders
             //O(1), making a priority queue to acheive the algorithm using the (PQ)
@@ -630,32 +630,32 @@ namespace Sounds_Packing_Algorithm_Project
             List<int> Duration = new List<int>();
             //always move the first audio in the created folder
             //O(1), creating the MetaDATA for the first created foler
-            FileStream f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
-            //O(1)
-            StreamWriter sw = new StreamWriter(f);
+            //FileStream f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
+            //O(1)??
+            //StreamWriter sw = new StreamWriter(f);
             //O(1) , writing in the meta data first line the folder name
-            sw.WriteLine("F" + Num_Folder);
+            //sw.WriteLine("F" + Num_Folder);
             //O(Log(M)) since it is empty so O(1)
             p.Enqueue(ListofTime[0].Item1, Num_Folder);
-            //O(1) , also adding the duration to the duration list      
+            //O(1)   , also adding the duration to the duration list      
             Duration.Add(ListofTime[0].Item1);
             //O(1)
             string pos = Mylist[ListofTime[0].Item2].Item1;
             //O(1) , moving the audio file to its folder
-            File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
+            //File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
             //O(1) , writing the audio info in the metadata
-            sw.WriteLine(Mylist[ListofTime[0].Item2].Item1 + " " + Mylist[ListofTime[0].Item2].Item2);
+            //sw.WriteLine(Mylist[ListofTime[0].Item2].Item1 + " " + Mylist[ListofTime[0].Item2].Item2);
             //O(1) , closing the stream writer
-            sw.Close();
+            //sw.Close();
             //O(1) , closing the file stream
-            f.Close();
+            //f.Close();
             //O(N*Log(N))
             for (int i = 1; i < Num_Audios; i++)
             {
                 //if there's space, move to folder with most remaining space
                 //O(Log(M))
-                //since in worst case M will equal N 
-                //O(LOG(N))
+                // since in worst case M will equal N 
+                // O(LOG(N))
                 if (Seconds - p.Peek() >= ListofTime[i].Item1)
                 {
                     //O(1)
@@ -663,13 +663,13 @@ namespace Sounds_Packing_Algorithm_Project
                     //O(1)
                     pos = Mylist[ListofTime[i].Item2].Item1;
                     //O(1) , copying the the audio to its suitable folder
-                    File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + p.ReturnIndex() + @"\" + pos, true);
+                    //File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + p.ReturnIndex() + @"\" + pos, true);
                     //O(1) , writing in its meta data the info of the selected audio
-                    f = new FileStream(finalpath + @"\F" + p.ReturnIndex() + "_METADATA.txt", FileMode.Append);
-                    //O(1)
-                    sw = new StreamWriter(f);
-                    //O(1)
-                    sw.WriteLine(Mylist[ListofTime[i].Item2].Item1 + " " + Mylist[ListofTime[i].Item2].Item2);
+                    //f = new FileStream(finalpath + @"\F" + p.ReturnIndex() + "_METADATA.txt", FileMode.Append);
+                    //O(1)??
+                    //sw = new StreamWriter(f);
+                    //O(1)??
+                    //sw.WriteLine(Mylist[ListofTime[i].Item2].Item1 + " " + Mylist[ListofTime[i].Item2].Item2);
                     //O(1)
                     Duration[p.ReturnIndex() - 1] += ListofTime[i].Item1;
                     //O(Log M)
@@ -680,10 +680,10 @@ namespace Sounds_Packing_Algorithm_Project
                     // since in worst case M will equal N 
                     // O(LOG(N))
                     p.Dequeue();
-                    //O(1)
-                    sw.Close();
-                    //O(1)
-                    f.Close();
+                    //O(1)??
+                    //sw.Close();
+                    //O(1)??
+                    //f.Close();
                 }
 
                 //if there's no space, create a new folder
@@ -700,24 +700,24 @@ namespace Sounds_Packing_Algorithm_Project
                     p.Enqueue(ListofTime[i].Item1, Num_Folder);
                     //O(1)
                     Duration.Add(ListofTime[i].Item1);
-                    //O(1)
-                    Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
-                    //O(1)
-                    f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
-                    //O(1)
-                    sw = new StreamWriter(f);
-                    //O(1)
-                    sw.WriteLine("F" + Num_Folder);
-                    //O(1)
-                    sw.WriteLine(Mylist[ListofTime[i].Item2].Item1 + " " + Mylist[ListofTime[i].Item2].Item2);
+                    //O(1)??
+                    //Directory.CreateDirectory(finalpath + @"\F" + Num_Folder);
+                    //O(1)??
+                    //f = new FileStream(finalpath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
+                    //O(1)??
+                    //sw = new StreamWriter(f);
+                    //O(1)??
+                    //sw.WriteLine("F" + Num_Folder);
+                    //O(1)??
+                    //sw.WriteLine(Mylist[ListofTime[i].Item2].Item1 + " " + Mylist[ListofTime[i].Item2].Item2);
                     //O(1)
                     pos = Mylist[ListofTime[i].Item2].Item1;
-                    //O(1)
-                    File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
-                    //O(1)
-                    sw.Close();
-                    //O(1)
-                    f.Close();
+                    //O(1)??
+                    //File.Copy(firstpath + @"\" + pos, finalpath + @"\F" + Num_Folder + @"\" + pos, true);
+                    //O(1)??
+                    //sw.Close();
+                    //O(1)??
+                    //f.Close();
                 }
             }
 
@@ -726,20 +726,20 @@ namespace Sounds_Packing_Algorithm_Project
             // O(N)
             for (int l = 0; l < Num_Folder; l++)
             {
-                //O(1)
-                f = new FileStream(finalpath + @"\F" + (l + 1) + "_METADATA.txt", FileMode.Append);
-                //O(1)
-                sw = new StreamWriter(f);
-                //O(1)
-                sw.WriteLine(TimeSpan.FromSeconds(Duration[l]).ToString());
-                //O(1)
-                sw.Close();
-                //O(1)
-                f.Close();
+                //O(1)??
+                //f = new FileStream(finalpath + @"\F" + (l + 1) + "_METADATA.txt", FileMode.Append);
+                //O(1)??
+                //sw = new StreamWriter(f);
+                //O(1)??
+                //sw.WriteLine(TimeSpan.FromSeconds(Duration[l]).ToString());
+                //O(1)??
+                //sw.Close();
+                //O(1)??
+                //f.Close();
             }
-            //O(1)
+            //O(1)??
             Timer.Stop();
-            //O(1)
+            //O(1)??
             writeAlgorithmInfo("worst Fit Decreasing PQ", Num_Audios, Seconds, Num_Folder, Timer.ElapsedMilliseconds);
 
             //O(1)
@@ -816,7 +816,7 @@ namespace Sounds_Packing_Algorithm_Project
 
             //create a new folder
             //O(1)
-            Directory.CreateDirectory(finalPath + @"\F" + Num_Folder);
+            //Directory.CreateDirectory(finalPath + @"\F" + Num_Folder);
 
 
             //list of duration in the created folders
@@ -825,11 +825,11 @@ namespace Sounds_Packing_Algorithm_Project
 
             //always move the first audio in the created folder
             //O(1) , opening a filestream to the meta data
-            FileStream f = new FileStream(finalPath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
+            //FileStream f = new FileStream(finalPath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
             //O(1) , opening the stream writer to write in the meta data
-            StreamWriter sw = new StreamWriter(f);
+            //StreamWriter sw = new StreamWriter(f);
             //O(1) , writing in the first meta data the folder name
-            sw.WriteLine("F" + Num_Folder);
+            //sw.WriteLine("F" + Num_Folder);
             //O(1)
             bool thereIsSpace = false;
 
@@ -838,13 +838,13 @@ namespace Sounds_Packing_Algorithm_Project
             //O(1)
             string tempname = Mylist[ListofTime[0].Item2].Item1;
             //O(1) , copying the first audio to its folder
-            File.Copy(firstpath + @"\" + tempname, finalPath + @"\F" + Num_Folder + @"\" + tempname, true);
+            //File.Copy(firstpath + @"\" + tempname, finalPath + @"\F" + Num_Folder + @"\" + tempname, true);
             //O(1 , writing its data in the meta data of that folder
-            sw.WriteLine(Mylist[ListofTime[0].Item2].Item1 + " " + Mylist[ListofTime[0].Item2].Item2);
+            //sw.WriteLine(Mylist[ListofTime[0].Item2].Item1 + " " + Mylist[ListofTime[0].Item2].Item2);
             //O(1) , closing the stream writer
-            sw.Close();
+            //sw.Close();
             //O(1) , closing the file stream
-            f.Close();
+            //f.Close();
 
 
             //Total loop : O(N*M) N is the number of Audio Files and M is the number of Folders
@@ -863,18 +863,18 @@ namespace Sounds_Packing_Algorithm_Project
                     {
                         //O(1) for assignment + O(1) for List.Item
                         tempname = Mylist[ListofTime[i].Item2].Item1;
-                        //O(1)
-                        File.Copy(firstpath + '\\' + tempname, finalPath + "\\F" + (j + 1) + "\\" + tempname, true);
-                        //O(1)
-                        f = new FileStream(finalPath + "\\F" + (j + 1) + "_METADATA.txt", FileMode.Append);
-                        //O(1)
-                        sw = new StreamWriter(f);
-                        //O(1)
-                        sw.WriteLine(Mylist[ListofTime[i].Item2].Item1 + " " + Mylist[ListofTime[i].Item2].Item2);
-                        //O(1)
-                        sw.Close();
-                        //O(1)
-                        f.Close();
+                        //O(1)??
+                        //File.Copy(firstpath + '\\' + tempname, finalPath + "\\F" + (j + 1) + "\\" + tempname, true);
+                        //O(1)??
+                        //f = new FileStream(finalPath + "\\F" + (j + 1) + "_METADATA.txt", FileMode.Append);
+                        //O(1)??
+                        //sw = new StreamWriter(f);
+                        //O(1)??
+                        //sw.WriteLine(Mylist[ListofTime[i].Item2].Item1 + " " + Mylist[ListofTime[i].Item2].Item2);
+                        //O(1)??
+                        //sw.Close();
+                        //O(1)??
+                        //f.Close();
 
                         //O(1)
                         Duration[j] += ListofTime[i].Item1;
@@ -895,25 +895,25 @@ namespace Sounds_Packing_Algorithm_Project
                     //O(1)
                     Num_Folder++;
                     //O(1)
-                    Directory.CreateDirectory(finalPath + @"\F" + Num_Folder);
+                    //Directory.CreateDirectory(finalPath + @"\F" + Num_Folder);
                     //O(1)
-                    f = new FileStream(finalPath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
+                    //f = new FileStream(finalPath + @"\F" + Num_Folder + "_METADATA.txt", FileMode.Append);
                     //O(1)
-                    sw = new StreamWriter(f);
+                    //sw = new StreamWriter(f);
                     //O(1)
-                    sw.WriteLine("F" + Num_Folder);
+                    //sw.WriteLine("F" + Num_Folder);
                     //O(1)s
-                    sw.WriteLine(Mylist[ListofTime[i].Item2].Item1 + " " + Mylist[ListofTime[i].Item2].Item2);
+                    //sw.WriteLine(Mylist[ListofTime[i].Item2].Item1 + " " + Mylist[ListofTime[i].Item2].Item2);
 
                     //O(1) for assignment
                     tempname = Mylist[ListofTime[i].Item2].Item1;
                     //O(1)
-                    File.Copy(firstpath + @"\" + tempname, finalPath + @"\F" + Num_Folder + @"\" + tempname, true);
+                    //File.Copy(firstpath + @"\" + tempname, finalPath + @"\F" + Num_Folder + @"\" + tempname, true);
 
                     //O(1)
-                    sw.Close();
+                    //sw.Close();
                     //O(1)
-                    f.Close();
+                    //f.Close();
                 }
             }
 
@@ -921,15 +921,15 @@ namespace Sounds_Packing_Algorithm_Project
             for (int l = 0; l < Num_Folder; l++)
             {
                 //O(1)
-                f = new FileStream(finalPath + @"\F" + (l + 1) + "_METADATA.txt", FileMode.Append);
+                //f = new FileStream(finalPath + @"\F" + (l + 1) + "_METADATA.txt", FileMode.Append);
                 //O(1)
-                sw = new StreamWriter(f);
+                //sw = new StreamWriter(f);
                 //O(1)
-                sw.WriteLine(TimeSpan.FromSeconds(Duration[l]).ToString());
+                //sw.WriteLine(TimeSpan.FromSeconds(Duration[l]).ToString());
                 //O(1)
-                sw.Close();
+                //sw.Close();
                 //O(1)
-                f.Close();
+                //f.Close();
             }
             //O(1)
             Timer.Stop();
@@ -950,7 +950,7 @@ namespace Sounds_Packing_Algorithm_Project
         {
             //Starting a timer for the function , O(1)??
             Stopwatch Timer = new Stopwatch();
-            //O(1)
+            //O(1)??
             Timer.Start();
             //getting how many seconds the user want , O(1)
             int UserInput = MainWindow.Seconds_Per_Folder;
@@ -981,7 +981,7 @@ namespace Sounds_Packing_Algorithm_Project
             }
 
             //O(1)
-            Directory.CreateDirectory(finalpath);
+            //Directory.CreateDirectory(finalpath);
             //O(1)
             int NumOfFolders = 1;
             //a list contains the remainig time in each folder , O(1)
@@ -989,9 +989,9 @@ namespace Sounds_Packing_Algorithm_Project
             //O(1)
             int minindex = -1;
             //O(1)
-            FileStream METADATA;
+            //FileStream METADATA;
             //O(1)
-            StreamWriter METADATAWRITER;
+            //StreamWriter METADATAWRITER;
             //O(1)
             int minumumtime = 1000;
             //O(1)
@@ -1015,24 +1015,24 @@ namespace Sounds_Packing_Algorithm_Project
                 if (minindex == -1)
                 {
                     //O(1)
-                    Directory.CreateDirectory(finalpath + @"\F" + NumOfFolders);//creating the first folder with will contain at least one audio
+                    //Directory.CreateDirectory(finalpath + @"\F" + NumOfFolders);//creating the first folder with will contain at least one audio
                     //O(1)
-                    METADATA = new FileStream(finalpath + @"\F" + NumOfFolders + "_METADATA.txt", FileMode.OpenOrCreate);
+                    //METADATA = new FileStream(finalpath + @"\F" + NumOfFolders + "_METADATA.txt", FileMode.OpenOrCreate);
                     //O(1)
-                    METADATAWRITER = new StreamWriter(METADATA);
+                    //METADATAWRITER = new StreamWriter(METADATA);
                     //O(1)
-                    METADATAWRITER.WriteLine("F" + NumOfFolders);
+                    //METADATAWRITER.WriteLine("F" + NumOfFolders);
                     //O(1)
                     temo = TimeSpan.FromSeconds(AudioInfo[i].Item1);
                     //O(1)
-                    METADATAWRITER.WriteLine(AudioNames[i] + " " + temo);
+                    //METADATAWRITER.WriteLine(AudioNames[i] + " " + temo);
 
                     //O(1)
-                    METADATAWRITER.Close();
+                    //METADATAWRITER.Close();
                     //O(1)
-                    METADATA.Close();
+                    //METADATA.Close();
                     //O(1)
-                    File.Copy(path + @"\" + AudioNames[i], finalpath + @"\F" + NumOfFolders + @"\" + AudioNames[i], true);
+                    //File.Copy(path + @"\" + AudioNames[i], finalpath + @"\F" + NumOfFolders + @"\" + AudioNames[i] ,true) ;
                     //O(1)
                     RemainigTime.Add(UserInput - AudioInfo[i].Item1);
                     //O(1)
@@ -1042,19 +1042,19 @@ namespace Sounds_Packing_Algorithm_Project
                 else
                 {
                     //O(1)
-                    METADATA = new FileStream(finalpath + @"\F" + (minindex + 1) + "_METADATA.txt", FileMode.Append);
+                    //METADATA = new FileStream(finalpath + @"\F" + (minindex + 1) + "_METADATA.txt", FileMode.Append);
                     //O(1)
-                    METADATAWRITER = new StreamWriter(METADATA);
+                    //METADATAWRITER = new StreamWriter(METADATA);
                     //O(1)
                     temo = TimeSpan.FromSeconds(AudioInfo[i].Item1);
                     //O(1)
-                    METADATAWRITER.WriteLine(AudioNames[i] + " " + temo);
+                    //METADATAWRITER.WriteLine(AudioNames[i] + " " + temo);
                     //O(1)
-                    METADATAWRITER.Close();
+                    //METADATAWRITER.Close();
                     //O(1)
-                    METADATA.Close();
+                    //METADATA.Close();
                     //O(1)
-                    File.Copy(path + @"\" + AudioNames[i], finalpath + @"\F" + (minindex + 1) + "/" + AudioNames[i], true);
+                    //File.Copy(path + @"\" + AudioNames[i], finalpath + @"\F" + (minindex + 1) + "/" + AudioNames[i] , true);
                     //O(1)
                     RemainigTime[minindex] -= AudioInfo[i].Item1;
                 }
@@ -1067,17 +1067,17 @@ namespace Sounds_Packing_Algorithm_Project
             for (int i = 0; i < RemainigTime.Count; i++)
             {
                 //O(1)
-                METADATA = new FileStream(finalpath + @"\F" + (i + 1) + "_METADATA.txt", FileMode.Append);
+                //METADATA = new FileStream(finalpath + @"\F" + (i + 1) + "_METADATA.txt", FileMode.Append);
                 //O(1)
-                METADATAWRITER = new StreamWriter(METADATA);
+                //METADATAWRITER = new StreamWriter(METADATA);
                 //O(1)
                 temo = TimeSpan.FromSeconds(UserInput - RemainigTime[i]);
                 //O(1)
-                METADATAWRITER.WriteLine(temo.ToString());
+                //METADATAWRITER.WriteLine(temo.ToString());
                 //O(1)
-                METADATAWRITER.Close();
+                //METADATAWRITER.Close();
                 //O(1)
-                METADATA.Close();
+                //METADATA.Close();
             }
             //O(1)
             Timer.Stop();
@@ -1094,15 +1094,14 @@ namespace Sounds_Packing_Algorithm_Project
         }
 
         //FOLDER FILLING///
-        //N*(N*W))
         public static void Folder_Filling()
         {
             //O(1)
             MainWindow.FolderFillingIsRunning = true;
             //O(1)
-            FileStream fs;
+            //FileStream fs;
             //O(1)
-            StreamWriter sw;
+            //StreamWriter sw;
 
             //O(1)
             int index;
@@ -1153,9 +1152,9 @@ namespace Sounds_Packing_Algorithm_Project
             // index for the folder to rename it with it's index
             //O(1)
             int counter = 0;
-            //O(1)
+            //O(1)??
             Stopwatch stopwatch = new Stopwatch();
-            //O(1)
+            //O(1)??
             stopwatch.Start();
             //O(1)
             long[,] t = new long[DurationAndIndexList.Count + 1, w + 1];
@@ -1281,61 +1280,61 @@ namespace Sounds_Packing_Algorithm_Project
                 }
             }
             //O(1)
-            int totalsecondsOfFolder = 0;
+            //int totalsecondsOfFolder = 0;
             //total complexity will be O(N) because at the worst case we will create folder for each file
             //iterate on each folder we have to create O(M) which at maximum will equal N so we can say O(N)
-            for (int i = 0; i < folders.Count; i++)
-            {
-                // get the new folder path 
-                //O(1)
-                targetfolderpath = MainWindow.FolderPath + @"\Folder_filling\F" + (i + 1).ToString();
-                // create new folder
-                //O(1)
-                System.IO.Directory.CreateDirectory(targetfolderpath);
-                //O(1)
-                metadatapath = MainWindow.FolderPath + @"\Folder_filling\F" + (i + 1).ToString() + "_METADATA.txt";
-                // open file stream to write the meta data of each folder
-                //O(1)
-                fs = new FileStream(metadatapath, FileMode.OpenOrCreate);
-                // open stream writer to write the meta data of each folder
-                //O(1)
-                sw = new StreamWriter(fs);
-                // write at the begining of the meta data the folder name
-                //O(1)
-                sw.WriteLine('F' + (i + 1).ToString());
-                //O(1)
-                totalsecondsOfFolder = 0;
-                //iterate over each file the folder have which will be maximum O(N)
-                for (int j = 0; j < folders[i].Count; j++)
-                {
-                    //O(1)
-                    totalsecondsOfFolder += DateTime.Parse(FilesNames[folders[i][j]].Item2).Second;
-                    //O(1)
-                    totalsecondsOfFolder += DateTime.Parse(FilesNames[folders[i][j]].Item2).Minute * 60;
-                    //O(1)
-                    totalsecondsOfFolder += DateTime.Parse(FilesNames[folders[i][j]].Item2).Hour * 3600;
-                    // write at the meta data of the folder
-                    //O(1)
-                    sw.WriteLine(FilesNames[folders[i][j]].Item1 + ' ' + FilesNames[folders[i][j]].Item2);
-                    // get the source path
-                    //O(1)
-                    tempfilesourcepath = filesourcepath + @"\" + FilesNames[folders[i][j]].Item1;
-                    // get the target path
-                    //O(1)
-                    tempfiletargetpath = targetfolderpath + @"\" + FilesNames[folders[i][j]].Item1;
-                    // copy from source to target
-                    //O(1)
-                    System.IO.File.Copy(tempfilesourcepath, tempfiletargetpath, true);
-                }
-                //O(1)
-                tempfiletime = TimeSpan.FromSeconds(totalsecondsOfFolder);
-                //O(1)
-                sw.WriteLine(tempfiletime.ToString());
-                //O(1)
-                sw.Close();
-                //O(1)
-                fs.Close();
-            }
+            //for (int i = 0; i < folders.Count; i++)
+            //{
+            //    // get the new folder path 
+            //    //O(1)
+            //    //targetfolderpath = MainWindow.FolderPath + @"\Folder_filling\F" + (i + 1).ToString();
+            //    // create new folder
+            //    //O(1)
+            //    //System.IO.Directory.CreateDirectory(targetfolderpath);
+            //    //O(1)
+            //    //metadatapath = MainWindow.FolderPath + @"\Folder_filling\F" + (i + 1).ToString() + "_METADATA.txt";
+            //    // open file stream to write the meta data of each folder
+            //    //O(1)
+            //    //fs = new FileStream(metadatapath, FileMode.OpenOrCreate);
+            //    // open stream writer to write the meta data of each folder
+            //    //O(1)
+            //    //sw = new StreamWriter(fs);
+            //    // write at the begining of the meta data the folder name
+            //    //O(1)
+            //    //sw.WriteLine('F' + (i + 1).ToString());
+            //    //O(1)
+            //    //totalsecondsOfFolder = 0;
+            //    //iterate over each file the folder have which will be maximum O(N)
+            //    for (int j = 0; j < folders[i].Count; j++)
+            //    {
+            //        //O(1)
+            //        totalsecondsOfFolder += DateTime.Parse(FilesNames[folders[i][j]].Item2).Second;
+            //        //O(1)
+            //        totalsecondsOfFolder += DateTime.Parse(FilesNames[folders[i][j]].Item2).Minute * 60;
+            //        //O(1)
+            //        totalsecondsOfFolder += DateTime.Parse(FilesNames[folders[i][j]].Item2).Hour * 3600;
+            //        // write at the meta data of the folder
+            //        //O(1)
+            //        sw.WriteLine(FilesNames[folders[i][j]].Item1 + ' ' + FilesNames[folders[i][j]].Item2);
+            //        // get the source path
+            //        //O(1)
+            //        tempfilesourcepath = filesourcepath + @"\" + FilesNames[folders[i][j]].Item1;
+            //        // get the target path
+            //        //O(1)
+            //        tempfiletargetpath = targetfolderpath + @"\" + FilesNames[folders[i][j]].Item1;
+            //        // copy from source to target
+            //        //O(1)
+            //        System.IO.File.Copy(tempfilesourcepath, tempfiletargetpath, true);
+            //    }
+            //    //O(1)
+            //    tempfiletime = TimeSpan.FromSeconds(totalsecondsOfFolder);
+            //    //O(1)
+            //    sw.WriteLine(tempfiletime.ToString());
+            //    //O(1)
+            //    sw.Close();
+            //    //O(1)
+            //    fs.Close();
+            //}
 
             //O(1)
             stopwatch.Stop();

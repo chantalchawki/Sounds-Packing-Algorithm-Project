@@ -71,6 +71,11 @@ namespace Sounds_Packing_Algorithm_Project
           
         }
 
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            table.ItemsSource = thelist();
+        }
+
         
     }
 }
